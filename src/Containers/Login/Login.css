@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.LogInButton {
+  align-items: left;
+  padding-left: 50px;
+  max-width: 30vmin;
+  border-radius: 40px 40px 40px 40px;
+}

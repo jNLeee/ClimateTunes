@@ -1,22 +1,18 @@
 import logo from './logo.svg';
 import './Login.css';
+import { Button} from 'react-bootstrap';
 
 function Login() {
   return (
     <div className="Login">
       <header className="Login-header">
-        <img src={logo} className="Login-logo" alt="logo" />
-        <p>
-          Edit <code>src/Login.js</code> and save to reload.
-        </p>
-        <a
-          className="Login-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <p className="LogInButton">
+                        <Button
+                            variant="primary"
+                            size="sm"
+                        >
+                            Sign In with Spotify
+                        </Button>{' '}</p>
       </header>
     </div>
   );

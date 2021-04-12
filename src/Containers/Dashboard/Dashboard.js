@@ -7,7 +7,7 @@ function Dashboard() {
       <header className="Dashboard-header">
         <img src={logo} className="Dashboard-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/Dashboard.js</code> and save to reload.
         </p>
         <a
           className="Dashboard-link"
