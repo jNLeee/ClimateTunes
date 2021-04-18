@@ -1,4 +1,4 @@
-import {ReactComponent as ReactLogo} from './Logo.svg';
+import {ReactComponent as ReactLogo} from './logo.svg';
 import './Login.css';
 import { Button} from 'react-bootstrap';
 
