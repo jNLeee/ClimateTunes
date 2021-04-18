@@ -37,9 +37,31 @@
   }
 }
 
-.LogInButton {
-  align-items: left;
+/* .LogInButton {
+  background-color: #1DB954;
+  color: white;
+  display: flex;
+  text-align: center;
+  font-size: large;
+  align-items: center;
   padding-left: 50px;
   max-width: 30vmin;
   border-radius: 40px 40px 40px 40px;
+} */
+
+.btn-login {
+  background-color: #1DB954;
+  border-color: #1DB954;
+  border-style: none;
+  border-radius:  1mm;
+  padding-left: 5pc;
+  padding-right: 5pc;
+  padding-top: 1pc;
+  padding-bottom: 1pc;
+  font-family: 'inter', sans-serif;
+  color: white;
+  text-align: center;
+
+  
+  box-shadow: none;
 }

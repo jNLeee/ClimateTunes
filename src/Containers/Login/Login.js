@@ -8,12 +8,11 @@ function Login() {
       
       <header className="Login-header">
       <ReactLogo />
-      <p className="LogInButton">
-                        <Button
-                            variant="primary"
-                            size="sm"
+      <p >
+                        <Button class="LogInButton"
+                            variant="login"
                         >
-                            Sign In with Spotify
+                          Sign in with Spotify
                         </Button>{' '}</p>
       </header>
     </div>
