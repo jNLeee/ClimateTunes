@@ -7,12 +7,12 @@ function Help() {
     <div classname="Help">
       <div classname="Navbar">
         <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
-          <ReactBootStrap.Navbar.Brand href="#home">Climate Tunes</ReactBootStrap.Navbar.Brand>
+          <ReactBootStrap.Navbar.Brand href="../Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
           <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
           <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
             <ReactBootStrap.Nav className="mr-auto">
-              <ReactBootStrap.Nav.Link href="#home">Home</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="#gettingStarted">Getting Started</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link href="../Dashboard">Home</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link href="./Help">Getting Started</ReactBootStrap.Nav.Link>
               <ReactBootStrap.Nav.Link href="#settings">Settings</ReactBootStrap.Nav.Link>
             </ReactBootStrap.Nav>
           </ReactBootStrap.Navbar.Collapse>
@@ -28,6 +28,9 @@ function Help() {
             </ReactBootStrap.Form>
             <p>
               This will display all the weather information in your area.
+            </p>
+            <p>
+              This is the Help Page.
             </p>
             <ReactBootStrap.Figure>
               <ReactBootStrap.Figure.Image
