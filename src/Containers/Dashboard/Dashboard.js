@@ -1,63 +1,122 @@
 import './Dashboard.css';
 import React, { useState } from "react";
 import * as ReactBootStrap from "react-bootstrap";
+import Weather from "./Weather.js";
+import Form from "./form";
 
-function Dashboard() {
-  return (
-    <div classname="Dashboard">
-      <div classname="Navbar">
-        <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
-          <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
-          <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
-            <ReactBootStrap.Nav className="mr-auto">
-              <ReactBootStrap.Nav.Link href="./Dashboard">Home</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="../Help">Getting Started</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="#settings">Settings</ReactBootStrap.Nav.Link>
-            </ReactBootStrap.Nav>
-          </ReactBootStrap.Navbar.Collapse>
-        </ReactBootStrap.Navbar>
+const API_key = "90336965ec56f27809bfa86f63e300fa";
+
+class Dashboard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      city: undefined,
+      country: undefined,
+      clouds: undefined,
+      visibility: undefined,
+      temp: undefined,
+      temp_max: undefined,
+      temp_min: undefined,
+      feels_like: undefined,
+      wind: undefined,
+      weather: "",
+      error: false
+
+    };
+  }
+
+  convertToFar(temp) {
+    let faren = Math.ceil((temp - 273.15) * (9/5) + 32)
+    return faren;
+  }
+
+  getWeather = async (e) => {
+
+    e.preventDefault();
+
+    const city = e.target.elements.city.value;
+
+    if(city) {
+      const api_call = await fetch(
+        `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`
+      );
+  
+      const response = await api_call.json();
+  
+      console.log(response);
+  
+      this.setState( {
+        city:`${response.name}`,
+        country: response.sys.country,
+        temp_celsius: this.convertToFar(response.main.temp),
+        temp_max: this.convertToFar(response.main.temp_max),
+        temp_min: this.convertToFar(response.main.temp_min),
+        description: response.weather[0].description,
+        error: false
+      })
+    } else {
+      this.setState({error: true});
+    }
+  };
+
+  render() {
+    return (
+      <div classname="Dashboard">
+        <div classname="Navbar">
+          <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
+            <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
+            <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
+              <ReactBootStrap.Nav className="mr-auto">
+                <ReactBootStrap.Nav.Link href="./Dashboard">Home</ReactBootStrap.Nav.Link>
+                <ReactBootStrap.Nav.Link href="../Help">Getting Started</ReactBootStrap.Nav.Link>
+                <ReactBootStrap.Nav.Link href="#settings">Settings</ReactBootStrap.Nav.Link>
+              </ReactBootStrap.Nav>
+            </ReactBootStrap.Navbar.Collapse>
+          </ReactBootStrap.Navbar>
+        </div>
+        <div classname="Jumbotron">
+          <ReactBootStrap.Jumbotron fluid>
+            <ReactBootStrap.Container>
+                <Form loadweather={this.getWeather} error={this.state.error}/>
+                <Weather 
+                  city={this.state.city} 
+                  country={this.state.country}
+                  temp_celsius={this.state.temp_celsius}
+                  temp_max={this.state.temp_max}
+                  temp_min={this.state.temp_min}
+                  description={this.state.description}
+                />
+                {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
+                <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
+              <ReactBootStrap.Figure>
+                <ReactBootStrap.Figure.Image
+                  width={50}
+                  height={50}
+                  alt="50x50"
+                  src="./Assets/Breezy-bg.jpg"
+                />
+              </ReactBootStrap.Figure>
+            </ReactBootStrap.Container>
+          </ReactBootStrap.Jumbotron>
+        </div>
+        <div classname="Dropdown">
+          <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
+            <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
+          </ReactBootStrap.DropdownButton>
+          <br></br>
+          <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
+            <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
+          </ReactBootStrap.DropdownButton>
+        </div>
       </div>
-      <br></br>
-      <div classname="Jumbotron">
-        <ReactBootStrap.Jumbotron fluid>
-          <ReactBootStrap.Container>
-            <ReactBootStrap.Form inline>
-              <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
-              <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button>
-            </ReactBootStrap.Form>
-            <p>
-              This will display all the weather information in your area.
-            </p>
-            <p>
-              This is the dashboard.
-            </p>
-            <ReactBootStrap.Figure>
-              <ReactBootStrap.Figure.Image
-                width={50}
-                height={50}
-                alt="50x50"
-                src="./Assets/Breezy-bg.jpg"
-              />
-            </ReactBootStrap.Figure>
-          </ReactBootStrap.Container>
-        </ReactBootStrap.Jumbotron>
-      </div>
-      <div classname="Dropdown">
-        <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
-          <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
-        </ReactBootStrap.DropdownButton>
-        <br></br>
-        <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
-          <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
-        </ReactBootStrap.DropdownButton>
-      </div>
-    </div>
-  );
+    );
+  }
 }
+
 
 export default Dashboard;

@@ -1,0 +1,38 @@
+form {
+    margin-top: 3rem;
+}
+
+form input[name="city"] {
+    margin-left: 0px;
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    border: 0;
+    /* border-bottom: 2px solid whitesmoke; */
+
+}
+
+form input:focus {
+    background-color: transparent;
+    box-shadow: none !important;
+}
+
+.button {
+    margin-left: 15px;
+    border-radius: 5px;
+    width: 150px;
+    height: 40px;
+    border: 2px solid #007bff;
+    color: #007bff;
+    /* background-color: whitesmoke; */
+}
+
+.button:hover {
+    background-color: #007bff;
+    border: 2px solid transparent;
+    color: white;
+}
+
+.alert {
+    color: red;
+}
