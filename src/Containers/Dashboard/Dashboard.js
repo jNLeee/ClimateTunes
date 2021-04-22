@@ -6,7 +6,7 @@ function Dashboard() {
   return (
     <div classname="Dashboard">
       <div classname="Navbar">
-        <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
+        <ReactBootStrap.Navbar className="color-nav" variant="dark" expand="lg">
           <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
           <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
           <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
