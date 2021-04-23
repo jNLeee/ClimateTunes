@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "weather-icons/css/weather-icons.css";
 import Weather from "./Weather.js";
 import City from "./City";
+import Temp from "./Temp";
 import Form from "./form";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -146,7 +147,9 @@ class Dashboard extends React.Component {
         <Col sm={10}>
           <div className="jumbotron">
             <div className="city">
-              <City/>
+              <City
+                city={this.state.city} 
+              />
             </div>
             <div className="weather">
               <Weather 
@@ -157,6 +160,13 @@ class Dashboard extends React.Component {
                 temp_min={this.state.temp_min}
                 description={this.state.description}
                 weatherIcon={this.state.icon}
+              />
+            </div>
+            <div className="temperature">
+              <Temp
+                temp_celsius={this.state.temp_celsius}
+                temp_max={this.state.temp_max}
+                temp_min={this.state.temp_min}
               />
             </div>
           </div>

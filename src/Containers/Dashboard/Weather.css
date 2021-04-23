@@ -7,7 +7,12 @@
 
 i {
     font-size: 200px;
+    margin-bottom: 50px;
 }
+
+/* .description {
+    margin-bottom: 00px;
+} */
 /* 
 .city {
     position: absolute;
