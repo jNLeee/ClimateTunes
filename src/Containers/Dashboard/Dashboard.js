@@ -132,10 +132,13 @@ class Dashboard extends React.Component {
         </div>
         <Row>
         <Col sm={2}>
-        <ReactBootStrap.Container>
-                  <Form loadweather={this.getWeather} error={this.state.error}/>
-              </ReactBootStrap.Container>
-              <br></br>
+          <div>
+            <Form loadweather={this.getWeather} error={this.state.error}/>
+          </div>
+          
+             
+          <br></br>
+          
           <div classname="Dropdown">
             <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
               <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
@@ -143,32 +146,44 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
             </ReactBootStrap.DropdownButton>
           </div>
+        
         </Col>
         <Col sm={10}>
+          
           <div className="jumbotron">
-            <div className="city">
-              <City
-                city={this.state.city} 
-              />
-            </div>
-            <div className="weather">
-              <Weather 
-                city={this.state.city} 
-                country={this.state.country}
-                temp_celsius={this.state.temp_celsius}
-                temp_max={this.state.temp_max}
-                temp_min={this.state.temp_min}
-                description={this.state.description}
-                weatherIcon={this.state.icon}
-              />
-            </div>
-            <div className="temperature">
-              <Temp
-                temp_celsius={this.state.temp_celsius}
-                temp_max={this.state.temp_max}
-                temp_min={this.state.temp_min}
-              />
-            </div>
+            <Row>
+              <Col>
+              <div className="city">
+                  <City
+                    city={this.state.city} 
+                  />
+                </div>
+                <br></br>
+                <div className="weather">
+                  <Weather 
+                    city={this.state.city} 
+                    country={this.state.country}
+                    temp_celsius={this.state.temp_celsius}
+                    temp_max={this.state.temp_max}
+                    temp_min={this.state.temp_min}
+                    description={this.state.description}
+                    weatherIcon={this.state.icon}
+                  />
+                </div>
+            </Col>
+              
+              <Col>
+                <div className="temperature" style={{ float: "left", paddingTop : '25%'}}>
+                  <Temp
+                    temp_celsius={this.state.temp_celsius}
+                    temp_max={this.state.temp_max}
+                    temp_min={this.state.temp_min}
+                  />
+                </div>
+              </Col>
+            </Row>
+          
+            
           </div>
 
           <div className="top-tracks">

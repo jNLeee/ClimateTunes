@@ -10,6 +10,10 @@ i {
     margin-bottom: 50px;
 }
 
+.description{
+    padding-left: 0;
+}
+
 /* .description {
     margin-bottom: 00px;
 } */
