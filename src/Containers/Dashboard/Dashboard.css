@@ -1,34 +1,7 @@
-/* .Jumbotron {
-    background-image: url(https://cdn.pixabay.com/photo/2017/11/06/21/11/paint-2924891_1280.jpg);
-    background-repeat: no-repeat, repeat;
-    background-position: center;
-    background-size: cover;
-    padding-top: 50px;
-    font-weight: bold;
-    margin-top: 100px;
-    margin-bottom: 10Opx;
-    padding: 100px;
-    border-radius: 50px;
-    box-shadow: 10px 10px 5px Opx rgba(0,0, 0,0.75);
+.color-nav{
+    background-color: rgb(197, 143, 143);
 }
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-    */
+.top-tracks{
+    font-family: 'inter', sans-serif;
+    text-align: left;
+}

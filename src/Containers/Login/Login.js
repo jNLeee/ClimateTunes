@@ -11,6 +11,7 @@ function Login() {
       <p >
                         <Button class="LogInButton"
                             variant="login"
+                            href="http://localhost:5000/login"
                         >
                           Sign in with Spotify
                         </Button>{' '}</p>
