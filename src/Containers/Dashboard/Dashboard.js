@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "weather-icons/css/weather-icons.css";
 import Weather from "./Weather.js";
 import Form from "./form";
+import Jumbotron from "./Breezy-bg.jpg";
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
 
@@ -122,6 +123,7 @@ class Dashboard extends React.Component {
         </div>
         <div classname="Jumbotron">
           <ReactBootStrap.Jumbotron fluid>
+            <ReactBootStrap.Image src="Breezy-bg.jpg" fluid />
             <ReactBootStrap.Container>
                 <Form loadweather={this.getWeather} error={this.state.error}/>
                 <Weather 
@@ -135,14 +137,6 @@ class Dashboard extends React.Component {
                 />
                 {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
                 <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
-              <ReactBootStrap.Figure>
-                <ReactBootStrap.Figure.Image
-                  width={50}
-                  height={50}
-                  alt="50x50"
-                  src="./Assets/Breezy-bg.jpg"
-                />
-              </ReactBootStrap.Figure>
             </ReactBootStrap.Container>
           </ReactBootStrap.Jumbotron>
         </div>
