@@ -1,6 +1,9 @@
 import './Help.css';
 import React, { useState } from "react";
 import * as ReactBootStrap from "react-bootstrap";
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 
 function Help() {
   return (

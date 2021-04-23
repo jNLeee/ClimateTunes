@@ -6,6 +6,9 @@ import "weather-icons/css/weather-icons.css";
 import Weather from "./Weather.js";
 import Form from "./form";
 import Jumbotron from "./Breezy-bg.jpg";
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
 
@@ -109,7 +112,7 @@ class Dashboard extends React.Component {
     return (
       <div classname="Dashboard">
         <div classname="Navbar">
-          <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
+        <ReactBootStrap.Navbar className="color-nav" variant="dark" expand="lg">
             <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
             <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
@@ -121,38 +124,60 @@ class Dashboard extends React.Component {
             </ReactBootStrap.Navbar.Collapse>
           </ReactBootStrap.Navbar>
         </div>
-        <div classname="Jumbotron">
-          <ReactBootStrap.Jumbotron fluid>
-            <ReactBootStrap.Image src="Breezy-bg.jpg" fluid />
-            <ReactBootStrap.Container>
-                <Form loadweather={this.getWeather} error={this.state.error}/>
-                <Weather 
-                  city={this.state.city} 
-                  country={this.state.country}
-                  temp_celsius={this.state.temp_celsius}
-                  temp_max={this.state.temp_max}
-                  temp_min={this.state.temp_min}
-                  description={this.state.description}
-                  weatherIcon={this.state.icon}
-                />
-                {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
-                <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
-            </ReactBootStrap.Container>
-          </ReactBootStrap.Jumbotron>
-        </div>
-        <div classname="Dropdown">
-          <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
-            <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
-            <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
-            <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
-          </ReactBootStrap.DropdownButton>
-          <br></br>
-          <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
-            <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
-            <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
-            <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
-          </ReactBootStrap.DropdownButton>
-        </div>
+        <Row>
+        <Col sm={2}>
+        <ReactBootStrap.Container>
+                  <Form loadweather={this.getWeather} error={this.state.error}/>
+              </ReactBootStrap.Container>
+              <br></br>
+          <div classname="Dropdown">
+            <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
+              <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
+            </ReactBootStrap.DropdownButton>
+            <br></br>
+            <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
+              <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
+            </ReactBootStrap.DropdownButton>
+          </div>
+        </Col>
+        <Col sm={10}>
+          <div classname="Jumbotron">
+            <ReactBootStrap.Jumbotron fluid>
+              <ReactBootStrap.Image src="Breezy-bg.jpg" fluid />
+              <Weather 
+                    city={this.state.city} 
+                    country={this.state.country}
+                    temp_celsius={this.state.temp_celsius}
+                    temp_max={this.state.temp_max}
+                    temp_min={this.state.temp_min}
+                    description={this.state.description}
+                    weatherIcon={this.state.icon}
+                  />
+                  {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
+                  <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
+            </ReactBootStrap.Jumbotron>
+          </div>
+          <div className="top-tracks">
+            <h4>Top Recommended Tracks</h4>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Song</th>
+                  <th>Artist</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
+            </table>
+          </div>
+        </Col>
+        </Row>
+        
       </div>
     );
   }
