@@ -10,3 +10,16 @@
     font-size: small;
     text-align: left;
 }
+
+.jumbotron {
+    background-image: url(./Assets/Breezy-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+    /* back */
+
+}
+
+.weather {
+    margin-right: 900px;
+}

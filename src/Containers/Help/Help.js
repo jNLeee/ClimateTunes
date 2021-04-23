@@ -35,29 +35,8 @@ function Help() {
             <p>
               This is the Help Page.
             </p>
-            <ReactBootStrap.Figure>
-              <ReactBootStrap.Figure.Image
-                width={50}
-                height={50}
-                alt="50x50"
-                src="./Assets/Breezy-bg.jpg"
-              />
-            </ReactBootStrap.Figure>
           </ReactBootStrap.Container>
         </ReactBootStrap.Jumbotron>
-      </div>
-      <div classname="Dropdown">
-        <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
-          <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
-        </ReactBootStrap.DropdownButton>
-        <br></br>
-        <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
-          <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
-          <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
-        </ReactBootStrap.DropdownButton>
       </div>
     </div>
   );

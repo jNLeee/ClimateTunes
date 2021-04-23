@@ -4,11 +4,16 @@ import * as ReactBootStrap from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "weather-icons/css/weather-icons.css";
 import Weather from "./Weather.js";
+import City from "./City";
 import Form from "./form";
-import Jumbotron from "./Breezy-bg.jpg";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import Cold from "./Assets/Cold-bg.jpg"
+import Chilly from "./Assets/Chilly-bg.jpg"
+import Breezy from "./Assets/Breezy-bg.jpg"
+import Warm from "./Assets/Warm-bg.jpg"
+import Hot from "./Assets/Hot-bg.jpg"
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
 
@@ -136,31 +141,26 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
               <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
             </ReactBootStrap.DropdownButton>
-            <br></br>
-            <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
-              <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
-            </ReactBootStrap.DropdownButton>
           </div>
         </Col>
         <Col sm={10}>
-          <div classname="Jumbotron">
-            <ReactBootStrap.Jumbotron fluid>
-              <ReactBootStrap.Image src="Breezy-bg.jpg" fluid />
+          <div className="jumbotron">
+            <div className="city">
+              <City/>
+            </div>
+            <div className="weather">
               <Weather 
-                    city={this.state.city} 
-                    country={this.state.country}
-                    temp_celsius={this.state.temp_celsius}
-                    temp_max={this.state.temp_max}
-                    temp_min={this.state.temp_min}
-                    description={this.state.description}
-                    weatherIcon={this.state.icon}
-                  />
-                  {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
-                  <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
-            </ReactBootStrap.Jumbotron>
+                city={this.state.city} 
+                country={this.state.country}
+                temp_celsius={this.state.temp_celsius}
+                temp_max={this.state.temp_max}
+                temp_min={this.state.temp_min}
+                description={this.state.description}
+                weatherIcon={this.state.icon}
+              />
+            </div>
           </div>
+
           <div className="top-tracks">
             <h4>Top Recommended Tracks</h4>
             <table className="table">

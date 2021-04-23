@@ -1,12 +1,13 @@
 import React from "react";
+import './Weather.css';
  
 const Weather = (props) => {
     return (
         <div className="container">
             <div className="cards">
 
-                <i className={`wi ${props.weatherIcon} display-1`}/>
-                <h1>{props.city}</h1>
+                <i className={`wi ${props.weatherIcon} wi-20x`}/>
+                <h1 className="city">{props.city}</h1>
                 {props.temp_celsius ? (
                     <h1 className="py-2">{props.temp_celsius}&deg;</h1>
                 ): null
