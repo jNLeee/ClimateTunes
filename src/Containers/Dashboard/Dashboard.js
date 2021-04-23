@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "weather-icons/css/weather-icons.css";
 import Weather from "./Weather.js";
 import Form from "./form";
-import Jumbotron from "./Breezy-bg.jpg";
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
 
@@ -106,63 +105,54 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <h2>Welcome to the app</h2>
-        {/* <img src="././././public/images/Breezy-bg.jpg" alt=""/> */}
-        {/* <img src={require('/Assets/Chilly-bg.jpg')} /> */}
+    return ( 
+      <div classname="Dashboard">
+        <div classname="Navbar">
+          <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
+            <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
+            <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
+              <ReactBootStrap.Nav className="mr-auto">
+                <ReactBootStrap.Nav.Link href="./Dashboard">Home</ReactBootStrap.Nav.Link>
+                <ReactBootStrap.Nav.Link href="../Help">Getting Started</ReactBootStrap.Nav.Link>
+                <ReactBootStrap.Nav.Link href="#settings">Settings</ReactBootStrap.Nav.Link>
+              </ReactBootStrap.Nav>
+            </ReactBootStrap.Navbar.Collapse>
+          </ReactBootStrap.Navbar>
+        </div>
+        <div classname="Jumbotron">
+          <ReactBootStrap.Jumbotron fluid>
+            <ReactBootStrap.Container>
+                <Form loadweather={this.getWeather} error={this.state.error}/>
+                <Weather 
+                  city={this.state.city} 
+                  country={this.state.country}
+                  temp_celsius={this.state.temp_celsius}
+                  temp_max={this.state.temp_max}
+                  temp_min={this.state.temp_min}
+                  description={this.state.description}
+                  weatherIcon={this.state.icon}
+                />
+                {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
+                <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
+            </ReactBootStrap.Container>
+          </ReactBootStrap.Jumbotron>
+        </div>
+        <div classname="Dropdown">
+          <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
+            <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
+          </ReactBootStrap.DropdownButton>
+          <br></br>
+          <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
+            <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
+            <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
+          </ReactBootStrap.DropdownButton>
+        </div>
+        <img src="/Assets/Chilly-bg.jpg" alt=""/>
       </div>
-
-
-
-      
-      // <div classname="Dashboard">
-      //   <div classname="Navbar">
-      //     <ReactBootStrap.Navbar bg="dark" variant="dark" expand="lg">
-      //       <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
-      //       <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
-      //       <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
-      //         <ReactBootStrap.Nav className="mr-auto">
-      //           <ReactBootStrap.Nav.Link href="./Dashboard">Home</ReactBootStrap.Nav.Link>
-      //           <ReactBootStrap.Nav.Link href="../Help">Getting Started</ReactBootStrap.Nav.Link>
-      //           <ReactBootStrap.Nav.Link href="#settings">Settings</ReactBootStrap.Nav.Link>
-      //         </ReactBootStrap.Nav>
-      //       </ReactBootStrap.Navbar.Collapse>
-      //     </ReactBootStrap.Navbar>
-      //   </div>
-      //   <div classname="Jumbotron">
-      //     <ReactBootStrap.Jumbotron fluid>
-      //       <ReactBootStrap.Container>
-      //           <Form loadweather={this.getWeather} error={this.state.error}/>
-      //           <Weather 
-      //             city={this.state.city} 
-      //             country={this.state.country}
-      //             temp_celsius={this.state.temp_celsius}
-      //             temp_max={this.state.temp_max}
-      //             temp_min={this.state.temp_min}
-      //             description={this.state.description}
-      //             weatherIcon={this.state.icon}
-      //           />
-      //           {/* <ReactBootStrap.FormControl type="text" placeholder="Find your location:" className="mr-sm-2" />
-      //           <ReactBootStrap.Button variant="outline-primary">Search</ReactBootStrap.Button> */}
-      //       </ReactBootStrap.Container>
-      //     </ReactBootStrap.Jumbotron>
-      //   </div>
-      //   <div classname="Dropdown">
-      //     <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
-      //       <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
-      //       <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
-      //       <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
-      //     </ReactBootStrap.DropdownButton>
-      //     <br></br>
-      //     <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Select a music genre:">
-      //       <ReactBootStrap.Dropdown.Item href="#/action-1">R&B</ReactBootStrap.Dropdown.Item>
-      //       <ReactBootStrap.Dropdown.Item href="#/action-2">Hip-Hop</ReactBootStrap.Dropdown.Item>
-      //       <ReactBootStrap.Dropdown.Item href="#/action-3">Pop</ReactBootStrap.Dropdown.Item>
-      //     </ReactBootStrap.DropdownButton>
-      //   </div>
-      //   <img src="/Assets/Chilly-bg.jpg" alt=""/>
-      // </div>
     );
   }
 }

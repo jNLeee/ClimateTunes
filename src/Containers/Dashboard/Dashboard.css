@@ -1,8 +1,13 @@
-.color-nav{
+.color-nav {
     background-color: rgb(197, 143, 143);
+}
+.color-dropdown{
+    background-color: rgb(197, 143, 143);
+
 }
 .top-tracks{
     font-family: 'inter', sans-serif;
+    font-size: small;
     text-align: left;
 }
 
