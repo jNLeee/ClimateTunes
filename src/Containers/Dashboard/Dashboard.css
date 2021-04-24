@@ -17,9 +17,36 @@
     background-position: 0 0; 
     background-repeat:no-repeat; 
     /* back */
-
 }
 
-.weather {
+.jumbotron.cold {
+    background-image: url(./Assets/Cold-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
+
+.jumbotron.chilly {
+    background-image: url(./Assets/Chilly-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
+
+.jumbotron.warm {
+    background-image: url(./Assets/Warm-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
+
+.jumbotron.hot {
+    background-image: url(./Assets/Hot-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
+
+/* .weather {
     margin-right: 900px;
-}
+} */
