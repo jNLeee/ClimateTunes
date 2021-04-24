@@ -134,10 +134,13 @@ class Dashboard extends React.Component {
         </div>
         <Row>
         <Col sm={2}>
-        <ReactBootStrap.Container>
-                  <Form loadweather={this.getWeather} error={this.state.error}/>
-              </ReactBootStrap.Container>
-              <br></br>
+          <div>
+            <Form loadweather={this.getWeather} error={this.state.error}/>
+          </div>
+          
+             
+          <br></br>
+          
           <div classname="Dropdown">
             <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
               <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
@@ -145,6 +148,7 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
             </ReactBootStrap.DropdownButton>
           </div>
+        
         </Col>
         <Col sm={10}>
           <div className=
