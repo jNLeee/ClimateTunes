@@ -1,56 +1,48 @@
 require('dotenv').config({ path: 'variable.env' });
-
 const express = require('express');
-const request = require('request');
 const cors = require('cors');
-const Datastore = require('nedb');
-const cron = require('node-cron');
-const Pusher = require('pusher');
 const authorizeSpotify = require('./authorizeSpotify');
-const getAccessToken = require('./getAccessToken');
-
-const clientUrl = process.env.CLIENT_URL;
-
+const querystring = require("querystring");
+const router = express.Router();
 const app = express();
-
-const db = new Datastore();
+const spotify = require('./credentials');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 app.get('/login', authorizeSpotify);
-app.get('/callback', getAccessToken, (req, res, next) => {
-  db.insert(req.credentials, err => {
-    if (err) {
-      next(err);
-    } else {
-      res.redirect(`${clientUrl}/Dashboard`);
-    }
+
+// helper function to encode data for token
+const encodeFormData = (data) => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
+}
+
+// get token and redirect back to dashboard
+router.get('/Dashboard', async (req, res) => {
+  let body = {
+    grant_type: "authorization_code",
+    code: req.query.code,
+    redirect_uri: spotify.redirect_uri,
+    client_id: spotify.client_id,
+    client_secret: spotify.client_secret
+  }
+
+  await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Accept": "application/json"
+    },
+    body: encodeFormData(body)
+  })
+  .then(resp => resp.json())
+  .then(data => {
+    let query = querystring.stringify(data);
+    res.redirect(`http://localhost:3000/Dashboard${query}`)
   });
 });
-
-// app.get('/callback', function(req, res) {
-//   let code = req.query.code || null
-//   let authOptions = {
-//     url: 'https://accounts.spotify.com/api/token',
-//     form: {
-//       code: code,
-//       redirect_uri: process.env.REDIRECT_URI,
-//       grant_type: 'authorization_code'
-//     },
-//     headers: {
-//       'Authorization': 'Basic ' + (Buffer.from(
-//         process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET, "base64"
-//       ))
-//     },
-//     json: true
-//   }
-//   request.post(authOptions, function(error, response, body) {
-//     var access_token = body.access_token
-//     let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
-//     res.redirect(uri + '/Dashboard?access_token=' + access_token)
-//   })
-// }) 
 
 app.set('port', process.env.PORT || 5000);
 const server = app.listen(app.get('port'), () => {
