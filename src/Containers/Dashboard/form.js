@@ -11,7 +11,9 @@ const Form = props => {
                         <input type="text" className="form-control" name="city" autoComplete="off" placeholder="City"></input>
                     </div>
                     <div className="buttonClass">
-                        <button className="button">Search</button>
+                        <button className="button">
+                                Search
+                            </button>
                     </div>
                 </div>
             </form>

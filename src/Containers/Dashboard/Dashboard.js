@@ -15,6 +15,7 @@ import Chilly from "./Assets/Chilly-bg.jpg"
 import Breezy from "./Assets/Breezy-bg.jpg"
 import Warm from "./Assets/Warm-bg.jpg"
 import Hot from "./Assets/Hot-bg.jpg"
+const querystring = require("querystring");
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
 
@@ -46,6 +47,17 @@ class Dashboard extends React.Component {
       Clear: "wi-day-sunny",
       Clouds: "wi-day-fog"
     };
+  }
+
+  componentDidMount() {
+    let parsed = querystring.parse(window.location.search);
+    let accessToken = parsed.access_token;
+    console.log(parsed);
+    fetch('https://api.spotify.com/v1/me', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+      .then(response => response.json())
+        .then(data => console.log(data))
   }
 
   get_WeatherIcon(icons, rangeId) {
