@@ -1,9 +1,9 @@
 
 .city {
     font-size: 50px;
-    text-align: center;
+    /* text-align: left; */
     color: white;
-    margin-top: 0px;
+    /* margin-top: -50px;
     margin-bottom: 30px;
-    margin-left: 0px;
+    margin-left: -120px; */
 } 

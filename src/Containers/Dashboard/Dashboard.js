@@ -18,6 +18,7 @@ import Hot from "./Assets/Hot-bg.jpg"
 const querystring = require("querystring");
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
+var temp = 0;
 
 class Dashboard extends React.Component {
   constructor() {
@@ -117,6 +118,7 @@ class Dashboard extends React.Component {
         description: response.weather[0].description,
         error: false
       });
+      temp = this.convertToFar(response.main.temp);
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
     } else {
@@ -161,41 +163,45 @@ class Dashboard extends React.Component {
         
         </Col>
         <Col sm={10}>
-          
-          <div className="jumbotron">
-            <Row>
-              <Col>
+          <div className=
+            {temp>90 ? 'jumbotron hot' : 
+              (temp>75 ? 'jumbotron warm' :
+                (temp>60 ? 'jumbotron breezy' :
+                  (temp>32 ? 'jumbotron chilly' :
+                    (temp<33 ? 'jumbotron cold' :
+                      'jumbotron'
+                    )
+                  )
+                )
+              )
+            }>
+
+
+            <div className="row">
               <div className="city">
-                  <City
-                    city={this.state.city} 
-                  />
-                </div>
-                <br></br>
-                <div className="weather">
-                  <Weather 
-                    city={this.state.city} 
-                    country={this.state.country}
-                    temp_celsius={this.state.temp_celsius}
-                    temp_max={this.state.temp_max}
-                    temp_min={this.state.temp_min}
-                    description={this.state.description}
-                    weatherIcon={this.state.icon}
-                  />
-                </div>
-            </Col>
-              
-              <Col>
-                <div className="temperature" style={{ float: "left", paddingTop : '25%'}}>
-                  <Temp
-                    temp_celsius={this.state.temp_celsius}
-                    temp_max={this.state.temp_max}
-                    temp_min={this.state.temp_min}
-                  />
-                </div>
-              </Col>
-            </Row>
-          
-            
+                <City
+                  city={this.state.city} 
+                />
+              </div>
+              <div className="weather">
+                <Weather 
+                  city={this.state.city} 
+                  country={this.state.country}
+                  temp_celsius={this.state.temp_celsius}
+                  temp_max={this.state.temp_max}
+                  temp_min={this.state.temp_min}
+                  description={this.state.description}
+                  weatherIcon={this.state.icon}
+                />
+              </div>
+              <div className="temperature">
+                <Temp
+                  temp_celsius={this.state.temp_celsius}
+                  temp_max={this.state.temp_max}
+                  temp_min={this.state.temp_min}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="top-tracks">
