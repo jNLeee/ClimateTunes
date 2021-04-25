@@ -6,6 +6,7 @@
     color: #fff !important;
     background: rgb(197, 143, 143) !important;
     border:  rgb(197, 143, 143) !important;
+    overflow: hidden !important;
 
 }
 
@@ -25,7 +26,6 @@
     background-position: 0 0; 
     background-repeat:no-repeat;
     position: relative;
-
     /* back */
 }
 
@@ -56,7 +56,3 @@
     background-position: 0 0; 
     background-repeat:no-repeat; 
 }
-
-/* .weather {
-    margin-right: 900px;
-} */

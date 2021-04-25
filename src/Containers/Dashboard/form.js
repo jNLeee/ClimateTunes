@@ -6,7 +6,7 @@ const Form = props => {
         <div className="container">
             <div>{props.error ? error():null}</div>
             <form onSubmit={props.loadweather}>
-                <div className="row">
+                <div className="input-row">
                     <div className="textBox">
                         <input type="text" className="form-control" name="city" autoComplete="off" placeholder="City"></input>
                     </div>

@@ -169,16 +169,19 @@ class Dashboard extends React.Component {
           </ReactBootStrap.Navbar>
         </div>
         <Row>
-        <Col sm={2}>
+        <Col lg={3}>
+        
           <div>
             <Form loadweather={this.getWeather} error={this.state.error}/>
           </div>
           
+          
              
           <br></br>
-          
+      
+          <div className="dropdown">
           <ReactBootStrap.Dropdown>
-            <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle">
+            <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle" variant="btn-sm">
               Choose your mood:
             </ReactBootStrap.Dropdown.Toggle>
 
@@ -188,9 +191,13 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Dropdown.Item href="#/action-3">Angry</ReactBootStrap.Dropdown.Item>
             </ReactBootStrap.Dropdown.Menu>
         </ReactBootStrap.Dropdown>
+          </div>
+          
+          <br></br>
+          
         
         </Col>
-        <Col sm={10}>
+        <Col lg>
           <div className=
             {temp>90 ? 'jumbotron hot' : 
               (temp>75 ? 'jumbotron warm' :
