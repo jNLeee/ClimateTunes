@@ -7,6 +7,7 @@ form input[name="city"] {
     width: 175px;
     height: 35px;
     border-radius: 5px;
+    border-color: black;
     color: black;
     border: 0;
     /* border-bottom: 2px solid whitesmoke; */
@@ -49,12 +50,12 @@ form input:focus {
     color: white;
 }
 
-
-.alert {
-    color: red;
-}
-
 .form-control {
     border-width: 3px;
     border-color: black;
+}
+
+
+.alert {
+    color: red;
 }

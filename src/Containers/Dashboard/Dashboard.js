@@ -7,6 +7,7 @@ import Weather from "./Weather.js";
 import City from "./City";
 import Temp from "./Temp";
 import Form from "./form";
+import Search from "./Search";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -40,8 +41,17 @@ class Dashboard extends React.Component {
 
       //spotify
       songName: undefined,
+      artistName: undefined,
+      trackID: undefined,
+      acousticness: undefined,
       danceability: undefined,
-      tempo: undefined
+      energy: undefined,
+      instrumentalness: undefined,
+      liveness: undefined,
+      loudness: undefined,
+      speechiness: undefined,
+      tempo: undefined,
+      valence: undefined
     };
 
     this.weatherIcon = {
@@ -55,35 +65,44 @@ class Dashboard extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let parsed = querystring.parse(window.location.search);
-    let accessToken = parsed.access_token;
-    console.log(parsed);
-    fetch('https://api.spotify.com/v1/me', {
-      headers: {"Authorization": 'Bearer ' + accessToken}
-    })
-      .then(response => response.json())
-        .then(data => console.log(data))
+  // componentDidMount() {
+  //   let parsed = querystring.parse(window.location.search);
+  //   let accessToken = parsed.access_token;
+  //   console.log(parsed);
+  //   fetch('https://api.spotify.com/v1/me', {
+  //     headers: {"Authorization": 'Bearer ' + accessToken}
+  //   })
+  //     .then(response => response.json())
+  //       .then(data => console.log(data))
     
-    //get track data
-    fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
-      headers: {"Authorization": 'Bearer ' + accessToken}
-    })
-      .then(response => response.json())
-        .then(data => this.setState({
-          songName: data.name
-        }))
+  //   //get track data
+  //   fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
+  //     headers: {"Authorization": 'Bearer ' + accessToken}
+  //   })
+  //     .then(response => response.json())
+  //       .then(data => this.setState({
+  //         songName: data.name
+  //       }))
+  //   fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
+  //     headers: {"Authorization": 'Bearer ' + accessToken}
+  //   })
+  //     .then(response => response.json())
+  //       .then(data => console.log(data))
 
-    //get audio features data
-    fetch('https://api.spotify.com/v1/audio-features/6rPO02ozF3bM7NnOV4h6s2', {
-      headers: {"Authorization": 'Bearer ' + accessToken}
-    })
-      .then(response => response.json())
-        .then(data => this.setState({
-          danceability: data.danceability,
-          tempo: data.tempo
-        }))
-  }
+  //   //get audio features data
+  //   fetch('https://api.spotify.com/v1/audio-features/6rPO02ozF3bM7NnOV4h6s2', {
+  //     headers: {"Authorization": 'Bearer ' + accessToken}
+  //   })
+  //     .then(response => response.json())
+  //       .then(data => console.log(data))
+
+  //   //search
+  //   fetch('https://api.spotify.com/v1/search?q=trumpets%20jason derulo&type=track', {
+  //     headers: {"Authorization": 'Bearer ' + accessToken}
+  //   })
+  //     .then(response => response.json())
+  //       .then(data => console.log(data))
+  // }
 
   get_WeatherIcon(icons, rangeId) {
     switch (true) {
@@ -116,6 +135,65 @@ class Dashboard extends React.Component {
   convertToFar(temp) {
     let faren = Math.ceil((temp - 273.15) * (9/5) + 32)
     return faren;
+  }
+
+  getSpotify = async (e) => {
+    e.preventDefault();
+
+    let parsed = querystring.parse(window.location.search);
+    let accessToken = parsed.access_token;
+
+    const song = e.target.elements.song.value;
+    const artist = e.target.elements.artist.value;
+
+    if(song) {
+      const api_call = await fetch(`https://api.spotify.com/v1/search?q=${song}%20${artist}&type=track`, {
+        headers: {"Authorization": 'Bearer ' + accessToken}
+      });
+
+      const response = await api_call.json();
+  
+      console.log(response);
+
+      this.setState( {
+        trackID: response.tracks.items[0].id,
+        songName: response.tracks.items[0].name,
+        artistName: response.tracks.items[0].artists[0].name,
+        error: false
+      });
+    } else {
+      this.setState({
+        error: true
+      });
+    }
+
+    const trackID = this.state.trackID;
+    if(trackID) {
+      const api_call = await fetch(`https://api.spotify.com/v1/audio-features/${trackID}`, {
+        headers: {"Authorization": 'Bearer ' + accessToken}
+      });
+
+      const response = await api_call.json();
+  
+      console.log(response);
+
+      this.setState( {
+        acousticness: response.acousticness,
+        danceability: response.danceability,
+        energy: response.energy,
+        instrumentalness: response.instrumentalness,
+        liveness: response.liveness,
+        loudness: response.loudness,
+        speechiness: response.speechiness,
+        tempo: response.tempo,
+        valence: response.valence,
+        error: false
+      });
+    } else {
+      this.setState({
+        error: true
+      });
+    }
   }
 
   getWeather = async (e) => {
@@ -251,9 +329,22 @@ class Dashboard extends React.Component {
                 </tr>
               </thead>
               {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
-              <h1>Song Name = {this.state.songName}</h1>
-              <h1>Danceability = {this.state.danceability}</h1>
-              <h1>Tempo = {this.state.tempo}</h1>
+              <div>
+                <Search searchsong={this.getSpotify} error={this.state.error}/>
+              </div>
+              
+              <h5>Song Name = {this.state.songName}</h5>
+              <h5>Artist Name = {this.state.artistName}</h5>
+              <h5>TrackID = {this.state.trackID}</h5>
+              <h5>Acousticness = {this.state.acousticness}</h5>
+              <h5>Danceability = {this.state.danceability}</h5>
+              <h5>Energy = {this.state.energy}</h5>
+              <h5>Instrumentalness = {this.state.instrumentalness}</h5>
+              <h5>Liveness = {this.state.liveness}</h5>
+              <h5>Loudness = {this.state.loudness}</h5>
+              <h5>Speechiness = {this.state.speechiness}</h5>
+              <h5>Tempo = {this.state.tempo}</h5>
+              <h5>Valence = {this.state.valence}</h5>
             </table>
           </div>
         </Col>
