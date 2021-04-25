@@ -23,8 +23,8 @@ form input:focus {
     width: 150px;
     height: 40px;
     border: 2px solid rgb(197, 143, 143);
-    color: rgb(197, 143, 143);
-    /* background-color: whitesmoke; */
+    color: white;
+    background-color: rgb(197, 143, 143);
 }
 
 .button:hover {
@@ -32,6 +32,7 @@ form input:focus {
     border: 2px solid transparent;
     color: white;
 }
+
 
 .alert {
     color: red;

@@ -1,10 +1,18 @@
 .color-nav {
     background-color: rgb(197, 143, 143);
 }
-.color-dropdown{
-    background-color: rgb(197, 143, 143);
+
+.dropdown-toggle{
+    color: #fff !important;
+    background: rgb(197, 143, 143) !important;
+    border:  rgb(197, 143, 143) !important;
 
 }
+
+.dropdown-toggle:active, .open .dropdown-toggle {
+    background:gray !important; 
+}
+
 .top-tracks{
     font-family: 'inter', sans-serif;
     font-size: small;

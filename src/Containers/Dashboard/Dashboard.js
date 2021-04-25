@@ -153,13 +153,17 @@ class Dashboard extends React.Component {
              
           <br></br>
           
-          <div classname="Dropdown">
-            <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
-              <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
-            </ReactBootStrap.DropdownButton>
-          </div>
+          <ReactBootStrap.Dropdown>
+            <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle">
+              Choose your mood:
+            </ReactBootStrap.Dropdown.Toggle>
+
+            <ReactBootStrap.Dropdown.Menu>
+              <ReactBootStrap.Dropdown.Item href="#/action-1">Happy</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-2">Sad</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-3">Angry</ReactBootStrap.Dropdown.Item>
+            </ReactBootStrap.Dropdown.Menu>
+        </ReactBootStrap.Dropdown>
         
         </Col>
         <Col sm={10}>
