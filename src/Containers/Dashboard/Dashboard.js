@@ -168,7 +168,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div classname="Dashboard">
+      <body>
         <div classname="Navbar">
         <ReactBootStrap.Navbar className="color-nav" variant="dark" expand="lg">
             <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
@@ -182,12 +182,12 @@ class Dashboard extends React.Component {
             </ReactBootStrap.Navbar.Collapse>
           </ReactBootStrap.Navbar>
         </div>
-        <Row>
-        <Col lg={3}>
+        <Row className="main-row">
+        <Col className="input-column" lg={3}>
         
-          <div>
+          
             <Form loadweather={this.getWeather} error={this.state.error}/>
-          </div>
+          
           
           
              
@@ -208,10 +208,9 @@ class Dashboard extends React.Component {
           </div>
           
           <br></br>
-          
         
         </Col>
-        <Col lg>
+        <Col>
           <div className=
             {temp>90 ? 'jumbotron hot' : 
               (temp>75 ? 'jumbotron warm' :
@@ -276,7 +275,7 @@ class Dashboard extends React.Component {
         </Col>
         </Row>
         
-      </div>
+      </body>
     );
   }
 }

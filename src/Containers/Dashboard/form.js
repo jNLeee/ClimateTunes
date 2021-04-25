@@ -8,7 +8,7 @@ const Form = props => {
             <form onSubmit={props.loadweather}>
                 <div className="input-row">
                     <div className="textBox">
-                        <input type="text" className="form-control" name="city" autoComplete="off" placeholder="City"></input>
+                        <input type="text" className="form-control" name="city" autoComplete="off" placeholder="Enter your location:"></input>
                     </div>
                     <div className="buttonClass">
                         <button className="button">

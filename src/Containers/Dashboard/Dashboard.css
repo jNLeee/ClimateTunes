@@ -2,6 +2,10 @@
     background-color: rgb(197, 143, 143);
 }
 
+.main-row{
+    height: 100%;
+}
+
 .dropdown-toggle{
     color: #fff !important;
     background: rgb(197, 143, 143) !important;
@@ -55,4 +59,9 @@
     background-size: cover;
     background-position: 0 0; 
     background-repeat:no-repeat; 
+}
+
+.input-column{
+    background-color: #E4E4E4;
+    align-items: center;
 }
