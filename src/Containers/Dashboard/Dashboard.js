@@ -10,13 +10,15 @@ import Form from "./form";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Cold from "./Assets/Cold-bg.jpg";
-import Chilly from "./Assets/Chilly-bg.jpg";
-import Breezy from "./Assets/Breezy-bg.jpg";
-import Warm from "./Assets/Warm-bg.jpg";
-import Hot from "./Assets/Hot-bg.jpg";
+import Cold from "./Assets/Cold-bg.jpg"
+import Chilly from "./Assets/Chilly-bg.jpg"
+import Breezy from "./Assets/Breezy-bg.jpg"
+import Warm from "./Assets/Warm-bg.jpg"
+import Hot from "./Assets/Hot-bg.jpg"
+const querystring = require("querystring");
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
+var temp = 0;
 
 const bgImage = [
   "",
@@ -31,6 +33,7 @@ class Dashboard extends React.Component {
   constructor() {
     super();
     this.state = {
+      //weather api
       city: undefined,
       country: undefined,
       clouds: undefined,
@@ -45,12 +48,11 @@ class Dashboard extends React.Component {
       weather: "",
       icon: undefined,
       error: false,
-      backgroundStyle: {
-        backgroundImage: bgImage[3],
-        backgroundPosition: '0 0',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat'
-      }
+
+      //spotify
+      songName: undefined,
+      danceability: undefined,
+      tempo: undefined
     };
 
     this.weatherIcon = {
@@ -64,46 +66,34 @@ class Dashboard extends React.Component {
     };
   }
 
-  switch_background(temp) {
-    /* Background Image Legend
-    Cold: <= 32°F
-    Chilly: 32°F - 59°F
-    Breezy: 60°F - 74°F
-    Warm: 75°F - 89°F
-    Hot: >= 90°F
-    */
-    // Change background images based on temp
-    if (temp >= 90) {
-      this.setState({
-          backgroundStyle: {
-          backgroundImage: bgImage[5]
-          }
-      });
-      } else if (temp >= 75 && temp < 90) {
-      this.setState({
-          backgroundStyle: {
-          backgroundImage: bgImage[4]
-          }
-      });
-      } else if (temp >= 60 && temp < 75) {
-      this.setState({
-          backgroundStyle: {
-          backgroundImage: bgImage[3]
-          }
-      });
-      } else if (temp > 32 && temp < 60) {
-      this.setState({
-          backgroundStyle: {
-          backgroundImage: bgImage[2]
-          }
-      });
-      }  else {
-      this.setState({
-          backgroundStyle: {
-          backgroundImage: bgImage[1]
-          }
-      });
-      }
+  componentDidMount() {
+    let parsed = querystring.parse(window.location.search);
+    let accessToken = parsed.access_token;
+    console.log(parsed);
+    fetch('https://api.spotify.com/v1/me', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+      .then(response => response.json())
+        .then(data => console.log(data))
+    
+    //get track data
+    fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+      .then(response => response.json())
+        .then(data => this.setState({
+          songName: data.name
+        }))
+
+    //get audio features data
+    fetch('https://api.spotify.com/v1/audio-features/6rPO02ozF3bM7NnOV4h6s2', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+      .then(response => response.json())
+        .then(data => this.setState({
+          danceability: data.danceability,
+          tempo: data.tempo
+        }))
   }
 
   get_WeatherIcon(icons, rangeId) {
@@ -166,6 +156,7 @@ class Dashboard extends React.Component {
         description: response.weather[0].description,
         error: false
       });
+      temp = this.convertToFar(response.main.temp);
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
       this.switch_background(this.temp);
@@ -193,62 +184,77 @@ class Dashboard extends React.Component {
           </ReactBootStrap.Navbar>
         </div>
         <Row>
-        <Col sm={2}>
+        <Col lg={3}>
+        
           <div>
             <Form loadweather={this.getWeather} error={this.state.error}/>
           </div>
           
+          
              
           <br></br>
-          
-          <div classname="Dropdown">
-            <ReactBootStrap.DropdownButton id="dropdown-basic-button" title="Choose your current mood:">
-              <ReactBootStrap.Dropdown.Item href="#/action-1">Sad</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-2">Happy</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-3">Mad</ReactBootStrap.Dropdown.Item>
-            </ReactBootStrap.DropdownButton>
+      
+          <div className="dropdown">
+          <ReactBootStrap.Dropdown>
+            <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle" variant="btn-sm">
+              Choose your mood:
+            </ReactBootStrap.Dropdown.Toggle>
+
+            <ReactBootStrap.Dropdown.Menu>
+              <ReactBootStrap.Dropdown.Item href="#/action-1">Happy</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-2">Sad</ReactBootStrap.Dropdown.Item>
+              <ReactBootStrap.Dropdown.Item href="#/action-3">Angry</ReactBootStrap.Dropdown.Item>
+            </ReactBootStrap.Dropdown.Menu>
+        </ReactBootStrap.Dropdown>
           </div>
+          
+          <br></br>
+          
         
         </Col>
-        <Col sm={10}>
-          
-          <div className="jumbotron">
-            <Row>
-              <Col>
+        <Col lg>
+          <div className=
+            {temp>90 ? 'jumbotron hot' : 
+              (temp>75 ? 'jumbotron warm' :
+                (temp>60 ? 'jumbotron breezy' :
+                  (temp>32 ? 'jumbotron chilly' :
+                    (temp<33 ? 'jumbotron cold' :
+                      'jumbotron'
+                    )
+                  )
+                )
+              )
+            }>
+
+
+            <div className="row">
               <div className="city">
                   <City
                     city={this.state.city} 
                   />
-                </div>
-                <br></br>
-                <div className="weather">
-                  <Weather 
-                    city={this.state.city} 
-                    country={this.state.country}
-                    temp_celsius={this.state.temp_celsius}
-                    temp_max={this.state.temp_max}
-                    temp_min={this.state.temp_min}
-                    description={this.state.description}
-                    weatherIcon={this.state.icon}
-                  />
-                </div>
-            </Col>
-              
-              <Col>
-                <div className="temperature" style={{ float: "left", paddingTop : '25%'}}>
-                  <Temp
-                    temp_celsius={this.state.temp_celsius}
-                    temp_max={this.state.temp_max}
-                    temp_min={this.state.temp_min}
-                    visibility={this.state.visibility}
-                    humidity={this.state.humidity}
-                    speed={this.state.speed}
-                  />
-                </div>
-              </Col>
-            </Row>
-          
-            
+              </div>
+              <div className="weather">
+                <Weather 
+                  city={this.state.city} 
+                  country={this.state.country}
+                  temp_celsius={this.state.temp_celsius}
+                  temp_max={this.state.temp_max}
+                  temp_min={this.state.temp_min}
+                  description={this.state.description}
+                  weatherIcon={this.state.icon}
+                />
+              </div>
+              <div className="temperature">
+                <Temp
+                  temp_celsius={this.state.temp_celsius}
+                  temp_max={this.state.temp_max}
+                  temp_min={this.state.temp_min}
+                  visibility={this.state.visibility}
+                  humidity={this.state.humidity}
+                  speed={this.state.speed}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="top-tracks">
@@ -263,6 +269,9 @@ class Dashboard extends React.Component {
                 </tr>
               </thead>
               {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
+              <h1>Song Name = {this.state.songName}</h1>
+              <h1>Danceability = {this.state.danceability}</h1>
+              <h1>Tempo = {this.state.tempo}</h1>
             </table>
           </div>
         </Col>

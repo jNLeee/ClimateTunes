@@ -24,6 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "request": "^2.88.2",
+    "spotify-web-api-node": "^5.0.2",
     "weather-icons": "git+https://github.com/erikflowers/weather-icons.git",
     "web-vitals": "^1.0.1"
   },

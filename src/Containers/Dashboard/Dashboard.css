@@ -1,10 +1,19 @@
 .color-nav {
     background-color: rgb(197, 143, 143);
 }
-.color-dropdown{
-    background-color: rgb(197, 143, 143);
+
+.dropdown-toggle{
+    color: #fff !important;
+    background: rgb(197, 143, 143) !important;
+    border:  rgb(197, 143, 143) !important;
+    overflow: hidden !important;
 
 }
+
+.dropdown-toggle:active, .open .dropdown-toggle {
+    background:gray !important; 
+}
+
 .top-tracks{
     font-family: 'inter', sans-serif;
     font-size: small;
@@ -17,14 +26,33 @@
     background-position: 0 0; 
     background-repeat:no-repeat;
     position: relative;
-
     /* back */
-
 }
 
-.weather {
-    /* margin-right: 900px; */
-    text-align: center;
-    
+.jumbotron.cold {
+    background-image: url(./Assets/Cold-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
 
+.jumbotron.chilly {
+    background-image: url(./Assets/Chilly-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
+
+.jumbotron.warm {
+    background-image: url(./Assets/Warm-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
+}
+
+.jumbotron.hot {
+    background-image: url(./Assets/Hot-bg.jpg);
+    background-size: cover;
+    background-position: 0 0; 
+    background-repeat:no-repeat; 
 }

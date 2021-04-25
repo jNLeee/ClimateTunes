@@ -3,8 +3,9 @@ form {
 }
 
 form input[name="city"] {
-    margin-left: 0px;
     background-color: white;
+    width: 175px;
+    height: 35px;
     border-radius: 5px;
     color: black;
     border: 0;
@@ -18,13 +19,28 @@ form input:focus {
 }
 
 .button {
-    margin-left: 15px;
+    /* margin-left: 15px; */
     border-radius: 5px;
-    width: 150px;
-    height: 40px;
+    width: 175px;
+    height: 35px;
     border: 2px solid rgb(197, 143, 143);
-    color: rgb(197, 143, 143);
-    /* background-color: whitesmoke; */
+    color: white;
+    background-color: rgb(197, 143, 143);
+    
+}
+
+.buttonClass {
+    overflow: visible;
+    align-items: center;
+}
+
+.input-row{
+    display: block;
+    align-items: center;
+}
+
+.text-box{
+    align-items: center;
 }
 
 .button:hover {
@@ -32,6 +48,7 @@ form input:focus {
     border: 2px solid transparent;
     color: white;
 }
+
 
 .alert {
     color: red;
