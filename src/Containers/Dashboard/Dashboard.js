@@ -10,13 +10,22 @@ import Form from "./form";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Cold from "./Assets/Cold-bg.jpg"
-import Chilly from "./Assets/Chilly-bg.jpg"
-import Breezy from "./Assets/Breezy-bg.jpg"
-import Warm from "./Assets/Warm-bg.jpg"
-import Hot from "./Assets/Hot-bg.jpg"
+import Cold from "./Assets/Cold-bg.jpg";
+import Chilly from "./Assets/Chilly-bg.jpg";
+import Breezy from "./Assets/Breezy-bg.jpg";
+import Warm from "./Assets/Warm-bg.jpg";
+import Hot from "./Assets/Hot-bg.jpg";
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
+
+const bgImage = [
+  "",
+  Cold,
+  Chilly,
+  Breezy,
+  Warm,
+  Hot,
+];
 
 class Dashboard extends React.Component {
   constructor() {
@@ -26,15 +35,22 @@ class Dashboard extends React.Component {
       country: undefined,
       clouds: undefined,
       visibility: undefined,
+      humidity: undefined,
       temp: undefined,
       temp_max: undefined,
       temp_min: undefined,
       feels_like: undefined,
       wind: undefined,
+      speed: undefined,
       weather: "",
       icon: undefined,
-      error: false
-
+      error: false,
+      backgroundStyle: {
+        backgroundImage: bgImage[3],
+        backgroundPosition: '0 0',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+      }
     };
 
     this.weatherIcon = {
@@ -46,6 +62,48 @@ class Dashboard extends React.Component {
       Clear: "wi-day-sunny",
       Clouds: "wi-day-fog"
     };
+  }
+
+  switch_background(temp) {
+    /* Background Image Legend
+    Cold: <= 32°F
+    Chilly: 32°F - 59°F
+    Breezy: 60°F - 74°F
+    Warm: 75°F - 89°F
+    Hot: >= 90°F
+    */
+    // Change background images based on temp
+    if (temp >= 90) {
+      this.setState({
+          backgroundStyle: {
+          backgroundImage: bgImage[5]
+          }
+      });
+      } else if (temp >= 75 && temp < 90) {
+      this.setState({
+          backgroundStyle: {
+          backgroundImage: bgImage[4]
+          }
+      });
+      } else if (temp >= 60 && temp < 75) {
+      this.setState({
+          backgroundStyle: {
+          backgroundImage: bgImage[3]
+          }
+      });
+      } else if (temp > 32 && temp < 60) {
+      this.setState({
+          backgroundStyle: {
+          backgroundImage: bgImage[2]
+          }
+      });
+      }  else {
+      this.setState({
+          backgroundStyle: {
+          backgroundImage: bgImage[1]
+          }
+      });
+      }
   }
 
   get_WeatherIcon(icons, rangeId) {
@@ -102,11 +160,15 @@ class Dashboard extends React.Component {
         temp_celsius: this.convertToFar(response.main.temp),
         temp_max: this.convertToFar(response.main.temp_max),
         temp_min: this.convertToFar(response.main.temp_min),
+        visibility: response.visibility,
+        humidity: response.main.humidity,
+        speed: response.wind.speed,
         description: response.weather[0].description,
         error: false
       });
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+      this.switch_background(this.temp);
     } else {
       this.setState({
         error: true
@@ -178,6 +240,9 @@ class Dashboard extends React.Component {
                     temp_celsius={this.state.temp_celsius}
                     temp_max={this.state.temp_max}
                     temp_min={this.state.temp_min}
+                    visibility={this.state.visibility}
+                    humidity={this.state.humidity}
+                    speed={this.state.speed}
                   />
                 </div>
               </Col>
@@ -207,6 +272,5 @@ class Dashboard extends React.Component {
     );
   }
 }
-
 
 export default Dashboard;
