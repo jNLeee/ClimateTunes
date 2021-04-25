@@ -159,7 +159,6 @@ class Dashboard extends React.Component {
       temp = this.convertToFar(response.main.temp);
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
-      this.switch_background(this.temp);
     } else {
       this.setState({
         error: true
