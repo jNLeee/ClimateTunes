@@ -36,6 +36,7 @@ app.get('/callback', async (req, res) => {
   res.redirect(dashboardRedirectLink);
 });
 
+
 // example code
 // app.get('/api/genres_of_artists', async (req, res) => { 
 //   var genres = []

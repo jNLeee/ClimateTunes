@@ -24,6 +24,7 @@ class Dashboard extends React.Component {
   constructor() {
     super();
     this.state = {
+      //weather api
       city: undefined,
       country: undefined,
       clouds: undefined,
@@ -35,8 +36,12 @@ class Dashboard extends React.Component {
       wind: undefined,
       weather: "",
       icon: undefined,
-      error: false
+      error: false,
 
+      //spotify
+      songName: undefined,
+      danceability: undefined,
+      tempo: undefined
     };
 
     this.weatherIcon = {
@@ -59,6 +64,25 @@ class Dashboard extends React.Component {
     })
       .then(response => response.json())
         .then(data => console.log(data))
+    
+    //get track data
+    fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+      .then(response => response.json())
+        .then(data => this.setState({
+          songName: data.name
+        }))
+
+    //get audio features data
+    fetch('https://api.spotify.com/v1/audio-features/6rPO02ozF3bM7NnOV4h6s2', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+      .then(response => response.json())
+        .then(data => this.setState({
+          danceability: data.danceability,
+          tempo: data.tempo
+        }))
   }
 
   get_WeatherIcon(icons, rangeId) {
@@ -220,6 +244,9 @@ class Dashboard extends React.Component {
                 </tr>
               </thead>
               {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
+              <h1>Song Name = {this.state.songName}</h1>
+              <h1>Danceability = {this.state.danceability}</h1>
+              <h1>Tempo = {this.state.tempo}</h1>
             </table>
           </div>
         </Col>
