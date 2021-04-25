@@ -2,13 +2,17 @@ form {
     margin-top: 3rem;
 }
 
+.form-control{
+    margin:0;
+}
+
 form input[name="city"] {
-    background-color: white;
-    width: 175px;
+    background-color: #F2F2F2;
     height: 35px;
     border-radius: 5px;
-    color: black;
+    color: #979797;
     border: 0;
+
     /* border-bottom: 2px solid whitesmoke; */
 
 }
@@ -21,7 +25,6 @@ form input:focus {
 .button {
     /* margin-left: 15px; */
     border-radius: 5px;
-    width: 175px;
     height: 35px;
     border: 2px solid rgb(197, 143, 143);
     color: white;
@@ -34,6 +37,10 @@ form input:focus {
     align-items: center;
 }
 
+.container{
+    padding: 0;
+}
+
 .input-row{
     display: block;
     align-items: center;
@@ -41,6 +48,7 @@ form input:focus {
 
 .text-box{
     align-items: center;
+    display: center;
 }
 
 .button:hover {

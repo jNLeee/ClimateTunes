@@ -21,6 +21,15 @@ const querystring = require("querystring");
 const API_key = "90336965ec56f27809bfa86f63e300fa";
 var temp = 0;
 
+const bgImage = [
+  "",
+  Cold,
+  Chilly,
+  Breezy,
+  Warm,
+  Hot,
+];
+
 class Dashboard extends React.Component {
   constructor() {
     super();
@@ -30,11 +39,13 @@ class Dashboard extends React.Component {
       country: undefined,
       clouds: undefined,
       visibility: undefined,
+      humidity: undefined,
       temp: undefined,
       temp_max: undefined,
       temp_min: undefined,
       feels_like: undefined,
       wind: undefined,
+      speed: undefined,
       weather: "",
       icon: undefined,
       error: false,
@@ -217,6 +228,9 @@ class Dashboard extends React.Component {
         temp_celsius: this.convertToFar(response.main.temp),
         temp_max: this.convertToFar(response.main.temp_max),
         temp_min: this.convertToFar(response.main.temp_min),
+        visibility: response.visibility,
+        humidity: response.main.humidity,
+        speed: response.wind.speed,
         description: response.weather[0].description,
         error: false
       });
@@ -232,7 +246,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div classname="Dashboard">
+      <body>
         <div classname="Navbar">
         <ReactBootStrap.Navbar className="color-nav" variant="dark" expand="lg">
             <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
@@ -246,12 +260,12 @@ class Dashboard extends React.Component {
             </ReactBootStrap.Navbar.Collapse>
           </ReactBootStrap.Navbar>
         </div>
-        <Row>
-        <Col lg={3}>
+        <Row className="main-row">
+        <Col className="input-column" lg={3}>
         
-          <div>
+          
             <Form loadweather={this.getWeather} error={this.state.error}/>
-          </div>
+          
           
           
              
@@ -272,10 +286,9 @@ class Dashboard extends React.Component {
           </div>
           
           <br></br>
-          
         
         </Col>
-        <Col lg>
+        <Col>
           <div className=
             {temp>90 ? 'jumbotron hot' : 
               (temp>75 ? 'jumbotron warm' :
@@ -292,9 +305,9 @@ class Dashboard extends React.Component {
 
             <div className="row">
               <div className="city">
-                <City
-                  city={this.state.city} 
-                />
+                  <City
+                    city={this.state.city} 
+                  />
               </div>
               <div className="weather">
                 <Weather 
@@ -312,6 +325,9 @@ class Dashboard extends React.Component {
                   temp_celsius={this.state.temp_celsius}
                   temp_max={this.state.temp_max}
                   temp_min={this.state.temp_min}
+                  visibility={this.state.visibility}
+                  humidity={this.state.humidity}
+                  speed={this.state.speed}
                 />
               </div>
             </div>
@@ -350,10 +366,9 @@ class Dashboard extends React.Component {
         </Col>
         </Row>
         
-      </div>
+      </body>
     );
   }
 }
-
 
 export default Dashboard;

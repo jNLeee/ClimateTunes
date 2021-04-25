@@ -9,5 +9,17 @@
 
 .minmax {
     margin-left: 0px;
-    margin-bottom: 70px;
+}
+
+.vision {
+    color: white;
+    font-size: 100px;
+    margin-left: 0px;
+    margin-bottom: 90px;
+}
+
+.humid {
+    color: white;
+    font-size: 100px;
+    margin-left: 0px;
 }
