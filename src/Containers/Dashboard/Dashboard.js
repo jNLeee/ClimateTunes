@@ -53,13 +53,11 @@ class Dashboard extends React.Component {
   componentDidMount() {
     let parsed = querystring.parse(window.location.search);
     let accessToken = parsed.access_token;
-
+    console.log(parsed);
     fetch('https://api.spotify.com/v1/me', {
-      headers: {
-        "Authorization": 'Bearer ' + accessToken
-      }
+      headers: {"Authorization": 'Bearer ' + accessToken}
     })
-      .then((response) => response.json())
+      .then(response => response.json())
         .then(data => console.log(data))
   }
 
