@@ -39,27 +39,28 @@ function getTopGenres(data) {
 }
 
 // get a list of recommended tracks based on given top genre seeds
-async function getTracksFromSeeds(access_token, topGenres) {
+async function getTracksFromSeeds(access_token, topGenres, topArtists) {
     const accessToken = access_token;
     const genres = topGenres;
     const limit = 10;
     var temp = 0;
     var seedGenres = "";
-    for (var i = 0; i < 5; i++){
+    for (var i = 0; i < 4; i++){
         var numGenres = genres.length;
         temp = Math.floor(Math.random() * numGenres);
         seedGenres += genres[temp];
         genres.splice(temp, 1);
-        if (i != 4) {
-            seedGenres += "%2C";
+        if (i != 3) {
+            seedGenres += "%2C";         
         }
     }
-
     // clean up string values
-    seedGenres = seedGenres.replace(/ /g, "%20");
-    seedGenres = seedGenres.replace('&', "%26");
+    seedGenres = seedGenres.replace(/ /g, "-");        
+    seedGenres = seedGenres.replace('&', "-n-");        // rock & roll  ->  rock--n--roll ??
+
+    const topArtistID = topArtists.items[0].id;
     
-    const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_genres=${seedGenres}`, {
+    const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}`, {
         method: 'GET',
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
@@ -107,10 +108,10 @@ async function createPlaylist(access_token, user_id, tracksData) {
 // generate a playlist given restrictions with consideration of user's top genres
 async function generatePlaylist(access_token) {
     const accessToken = access_token;
-    const topData = await getTopArtists(accessToken);
-    const topGenres = await getTopGenres(topData);
+    const topArtists = await getTopArtists(accessToken);
+    const topGenres = await getTopGenres(topArtists);
     //const topTracks = await getTopTracks(accessToken);                                    // currently not using this but kept for just in case
-    const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres);
+    const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists);
 
     // get current user id
     const userInfoCall = await fetch(`https://api.spotify.com/v1/me`, {
