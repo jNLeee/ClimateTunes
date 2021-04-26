@@ -4,8 +4,8 @@ import './Temp.css';
 const Temp = (props) => {
     return (
         <div className="container">
-            {props.temp_celsius ? (
-                    <h2 className="temperature">{props.temp_celsius}°F</h2>
+            {props.temp ? (
+                    <h2 className="temperature">{props.temp}°F</h2>
                 ): null
             }
             <div className="minmax">

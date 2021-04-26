@@ -206,7 +206,7 @@ class Dashboard extends React.Component {
       this.setState( {
         city:`${response.name}`,
         country: response.sys.country,
-        temp_celsius: this.convertToFar(response.main.temp),
+        temp: this.convertToFar(response.main.temp),
         temp_max: this.convertToFar(response.main.temp_max),
         temp_min: this.convertToFar(response.main.temp_min),
         visibility: response.visibility,
@@ -215,7 +215,7 @@ class Dashboard extends React.Component {
         description: response.weather[0].description,
         error: false
       });
-      const temp = this.convertToFar(response.main.temp);
+      const temperature = this.state.temp;
       const weatherType = this.state.weatherType;
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
@@ -285,11 +285,11 @@ class Dashboard extends React.Component {
         </Col>
         <Col xl>
           <div className=
-            {temp>90 ? 'jumbotron hot' : 
-              (temp>75 ? 'jumbotron warm' :
-                (temp>60 ? 'jumbotron breezy' :
-                  (temp>32 ? 'jumbotron chilly' :
-                    (temp<33 ? 'jumbotron cold' :
+            {this.state.temp>90 ? 'jumbotron hot' : 
+              (this.state.temp>75 ? 'jumbotron warm' :
+                (this.state.temp>60 ? 'jumbotron breezy' :
+                  (this.state.temp>32 ? 'jumbotron chilly' :
+                    (this.state.temp<33 ? 'jumbotron cold' :
                       'jumbotron'
                     )
                   )
@@ -310,7 +310,7 @@ class Dashboard extends React.Component {
                     <Weather 
                       city={this.state.city} 
                       country={this.state.country}
-                      temp_celsius={this.state.temp_celsius}
+                      temp={this.state.temp}
                       temp_max={this.state.temp_max}
                       temp_min={this.state.temp_min}
                       description={this.state.description}
@@ -321,7 +321,7 @@ class Dashboard extends React.Component {
                 <Col className="jumbo-right" lg>
                   <div className="temperature">
                   <Temp
-                    temp_celsius={this.state.temp_celsius}
+                    temp={this.state.temp}
                     temp_max={this.state.temp_max}
                     temp_min={this.state.temp_min}
                     visibility={this.state.visibility}
