@@ -303,34 +303,42 @@ class Dashboard extends React.Component {
               )
             }>
 
-
-            <div className="row">
-              <div className="city">
-                  <City
-                    city={this.state.city} 
+            
+            <div>
+              <Row>
+                <Col lg>
+                  <div className="city">
+                    <City
+                      city={this.state.city} 
+                    />
+                  </div>
+                  <div className="weather">
+                    <Weather 
+                      city={this.state.city} 
+                      country={this.state.country}
+                      temp_celsius={this.state.temp_celsius}
+                      temp_max={this.state.temp_max}
+                      temp_min={this.state.temp_min}
+                      description={this.state.description}
+                      weatherIcon={this.state.icon}
+                    />
+                  </div>
+                </Col>
+                <Col className="jumbo-right" lg>
+                  <div className="temperature">
+                  <Temp
+                    temp_celsius={this.state.temp_celsius}
+                    temp_max={this.state.temp_max}
+                    temp_min={this.state.temp_min}
+                    visibility={this.state.visibility}
+                    humidity={this.state.humidity}
+                    speed={this.state.speed}
                   />
-              </div>
-              <div className="weather">
-                <Weather 
-                  city={this.state.city} 
-                  country={this.state.country}
-                  temp_celsius={this.state.temp_celsius}
-                  temp_max={this.state.temp_max}
-                  temp_min={this.state.temp_min}
-                  description={this.state.description}
-                  weatherIcon={this.state.icon}
-                />
-              </div>
-              <div className="temperature">
-                <Temp
-                  temp_celsius={this.state.temp_celsius}
-                  temp_max={this.state.temp_max}
-                  temp_min={this.state.temp_min}
-                  visibility={this.state.visibility}
-                  humidity={this.state.humidity}
-                  speed={this.state.speed}
-                />
-              </div>
+                </div>
+                </Col>
+              </Row>
+              
+              
             </div>
           </div>
 
