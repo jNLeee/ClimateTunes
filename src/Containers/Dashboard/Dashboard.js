@@ -62,7 +62,9 @@ class Dashboard extends React.Component {
       loudness: undefined,
       speechiness: undefined,
       tempo: undefined,
-      valence: undefined
+      valence: undefined,
+      playlists_id: undefined,
+      playlist_link: undefined
     };
 
     this.weatherIcon = {
@@ -76,44 +78,26 @@ class Dashboard extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   let parsed = querystring.parse(window.location.search);
-  //   let accessToken = parsed.access_token;
-  //   console.log(parsed);
-  //   fetch('https://api.spotify.com/v1/me', {
-  //     headers: {"Authorization": 'Bearer ' + accessToken}
-  //   })
-  //     .then(response => response.json())
-  //       .then(data => console.log(data))
+  componentDidMount() {
+    let parsed = querystring.parse(window.location.search);
+    let accessToken = parsed.access_token;
+    console.log(parsed);
+
+    fetch('https://api.spotify.com/v1/me/playlists', {
+      headers: {"Authorization": 'Bearer ' + accessToken}
+    })
+    .then(response => response.json())
+        .then(data => this.setState({
+          playlist_id: data.items[0].id
+        })) 
     
-  //   //get track data
-  //   fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
-  //     headers: {"Authorization": 'Bearer ' + accessToken}
-  //   })
-  //     .then(response => response.json())
-  //       .then(data => this.setState({
-  //         songName: data.name
-  //       }))
-  //   fetch('https://api.spotify.com/v1/tracks/6rPO02ozF3bM7NnOV4h6s2', {
-  //     headers: {"Authorization": 'Bearer ' + accessToken}
-  //   })
-  //     .then(response => response.json())
-  //       .then(data => console.log(data))
+    
+  }
 
-  //   //get audio features data
-  //   fetch('https://api.spotify.com/v1/audio-features/6rPO02ozF3bM7NnOV4h6s2', {
-  //     headers: {"Authorization": 'Bearer ' + accessToken}
-  //   })
-  //     .then(response => response.json())
-  //       .then(data => console.log(data))
-
-  //   //search
-  //   fetch('https://api.spotify.com/v1/search?q=trumpets%20jason derulo&type=track', {
-  //     headers: {"Authorization": 'Bearer ' + accessToken}
-  //   })
-  //     .then(response => response.json())
-  //       .then(data => console.log(data))
-  // }
+  generatePlaylistLink(id) {
+    var playlist_link = "https://open.spotify.com/embed/playlist/" + id;
+    return playlist_link;
+  }
 
   get_WeatherIcon(icons, rangeId) {
     switch (true) {
@@ -207,6 +191,34 @@ class Dashboard extends React.Component {
     }
   }
 
+  //get playlist link
+
+  // generatePlaylistLink() {
+
+  //   let parsed = querystring.parse(window.location.search);
+  //   let accessToken = parsed.access_token;
+
+  //   fetch('https://api.spotify.com/v1/me/playlists', {
+  //     headers: {"Authorization": 'Bearer ' + accessToken}
+  //   })
+  //   .then(response => response.json())
+  //     // .then(data => console.log(data))
+  //       .then(data => this.setState({
+  //         playlist_id: data.items[0].id
+  //       })) 
+
+
+
+  //   const id = this.state.playlists_id;
+  //   // .then(response => response.json())
+  //   //     .then(data => this.setState({
+  //   //       playlist_id: data.items[0].id
+  //   //     })) 
+
+  //   var playlist_link = `https://open.spotify.com/embed/playlist/${id}`;
+  //   this.state.playlist_link = playlist_link;
+  // }
+
   getWeather = async (e) => {
 
     e.preventDefault();
@@ -286,7 +298,9 @@ class Dashboard extends React.Component {
           </div>
           
           <br></br>
-        
+          
+          
+
         </Col>
         <Col>
           <div className=
@@ -335,7 +349,10 @@ class Dashboard extends React.Component {
 
           <div className="top-tracks">
             <h4>Top Recommended Tracks</h4>
-            <table className="table">
+            <div className="spotify-player"> 
+            <iframe src={this.generatePlaylistLink(String(this.state.playlist_id))} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+            {/* <table className="table">
               <thead>
                 <tr>
                   <th>#</th>
@@ -343,9 +360,9 @@ class Dashboard extends React.Component {
                   <th>Artist</th>
                   <th>Time</th>
                 </tr>
-              </thead>
+              </thead> */}
               {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
-              <div>
+              {/* <div>
                 <Search searchsong={this.getSpotify} error={this.state.error}/>
               </div>
               
@@ -360,8 +377,8 @@ class Dashboard extends React.Component {
               <h5>Loudness = {this.state.loudness}</h5>
               <h5>Speechiness = {this.state.speechiness}</h5>
               <h5>Tempo = {this.state.tempo}</h5>
-              <h5>Valence = {this.state.valence}</h5>
-            </table>
+              <h5>Valence = {this.state.valence}</h5> */}
+            {/* </table> */}
           </div>
         </Col>
         </Row>
