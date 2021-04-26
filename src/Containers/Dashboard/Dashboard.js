@@ -270,6 +270,7 @@ class Dashboard extends React.Component {
           
              
           <br></br>
+          <br></br>
       
           <div className="dropdown">
           <ReactBootStrap.Dropdown>
