@@ -34,7 +34,7 @@ function getTopGenres(data) {
         for (var j = 0; j < Object.keys(data.items[i].genres).length; j++)
             topGenres.push(data.items[i].genres[j]);
     }
-
+    console.log(topGenres);
     return topGenres;
 }
 
@@ -69,7 +69,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists) {
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const response = await api_call.json();
-
+    console.log(response);
     return response;
 }
 
