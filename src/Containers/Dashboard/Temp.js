@@ -28,8 +28,8 @@ function minmaxTemp(min,max) {
     if(min && max) {
         return (
             <h4>
-                <span className="px-4">{min}°F </span>
-                <span className="px-4">{max}°F </span>
+                <span className="px-4">Lows: {min}°F </span>
+                <span className="px-4">Highs: {max}°F </span>
                 <br></br>
                 <br></br>
             </h4>
