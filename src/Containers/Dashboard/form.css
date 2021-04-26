@@ -1,5 +1,6 @@
 form {
     margin-top: 3rem;
+    display: inline-block;
 }
 
 .form-control{
@@ -38,7 +39,7 @@ form input:focus {
 }
 
 .container{
-    padding: 0;
+    align-items: center;
 }
 
 .input-row{

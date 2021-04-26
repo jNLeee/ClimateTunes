@@ -13,13 +13,25 @@
 
 .vision {
     color: white;
-    font-size: 100px;
     margin-left: 0px;
-    margin-bottom: 90px;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .humid {
     color: white;
-    font-size: 100px;
     margin-left: 0px;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
+.wind_speed{
+    color: white;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p{
+    text-align: left;
+    font-size: smaller;
+  }

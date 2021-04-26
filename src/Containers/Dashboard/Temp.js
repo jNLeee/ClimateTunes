@@ -12,13 +12,13 @@ const Temp = (props) => {
                 {minmaxTemp(props.temp_min, props.temp_max)}
             </div>
             <div className="vision">
-                <h2> {vision(props.visibility)} </h2>
+                <h2>{vision(props.visibility)} </h2>
             </div>
             <div className="humid">
-                <h2> {humid(props.humidity)} </h2>
+                <h2>{humid(props.humidity)} </h2>
             </div>
             <div className="wind_speed">
-                <h2> {wind_speed(props.speed)} </h2>
+                <h2>{wind_speed(props.speed)} </h2>
             </div>
         </div>
     );
@@ -27,10 +27,14 @@ const Temp = (props) => {
 function minmaxTemp(min,max) {
     if(min && max) {
         return (
-            <h3>
-                <span className="px-4">Low: {min}°F </span>
-                <span className="px-4">High: {max}°F </span>
-            </h3>
+            <h4>
+                <span className="px-4">{min}°F </span>
+                <span className="px-4">{max}°F </span>
+                <br></br>
+                <br></br>
+            </h4>
+            
+            
         )
     }
 }
@@ -38,9 +42,9 @@ function minmaxTemp(min,max) {
 function vision(visibility) {
     if(visibility) {
         return (
-            <h3>
+            <p>
                 <span className="px-4">Visibility: {visibility} Km </span>
-            </h3>
+            </p>
         )
     }
 }
@@ -48,9 +52,9 @@ function vision(visibility) {
 function humid(humidity) {
     if(humidity) {
         return (
-            <h3>
+            <p>
                 <span className="px-4">Humidity: {humidity} % </span>
-            </h3>
+            </p>
         )
     }
 }
@@ -58,9 +62,9 @@ function humid(humidity) {
 function wind_speed(speed) {
     if(speed) {
         return (
-            <h3>
+            <p>
                 <span className="px-4">Wind Speed: {speed} Km/hr</span>
-            </h3>
+            </p>
         )
     }
 }
