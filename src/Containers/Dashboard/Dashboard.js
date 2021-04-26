@@ -329,6 +329,8 @@ class Dashboard extends React.Component {
             <div className="spotify-player"> 
             <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           </div>
+
+          
             {/* <table className="table">
               <thead>
                 <tr>
@@ -339,6 +341,7 @@ class Dashboard extends React.Component {
                 </tr>
               </thead> */}
               {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
+        
               {/* <div>
                 <Search searchsong={this.getSpotify} error={this.state.error}/>
               </div>
@@ -354,8 +357,10 @@ class Dashboard extends React.Component {
               <h5>Loudness = {this.state.loudness}</h5>
               <h5>Speechiness = {this.state.speechiness}</h5>
               <h5>Tempo = {this.state.tempo}</h5>
-              <h5>Valence = {this.state.valence}</h5> */}
-            {/* </table> */}
+              <h5>Valence = {this.state.valence}</h5>  */}
+
+
+            {/* {/* </table> */}
           </div>
         </Col>
         </Row>
