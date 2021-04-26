@@ -59,8 +59,12 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists) {
     seedGenres = seedGenres.replace('&', "-n-");        // rock & roll  ->  rock--n--roll ??
 
     const topArtistID = topArtists.items[0].id;
-    
-    const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}`, {
+    const danceability = 0.694; // .779     0.677
+    const energy = 0.677;       // 0.641    0.654
+    const loudness = -4.922;    // -4.912   -5.228
+    const speechiness = 0.156;  // 0.141    0.0372
+    const valence = 0.669;      // 0.638    0.563
+    const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}&target_danceability=${danceability}&target_energy=${energy}&target_loudness=${loudness}&target_speechiness=${speechiness}&target_valence=${valence}`, {
         method: 'GET',
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
