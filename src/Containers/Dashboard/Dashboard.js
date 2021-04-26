@@ -49,6 +49,7 @@ class Dashboard extends React.Component {
       speed: undefined,
       weather: "",
       icon: undefined,
+      weatherType: undefined,
       error: false,
 
       //spotify
@@ -79,16 +80,16 @@ class Dashboard extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let parsed = querystring.parse(window.location.search);
-    let accessToken = parsed.access_token;
-    console.log(parsed);
+  // componentDidMount() {
+  //   let parsed = querystring.parse(window.location.search);
+  //   let accessToken = parsed.access_token;
+  //   console.log(parsed);
     
-    generatePlaylist(accessToken)
-      .then(data => this.setState({
-        playlist_id: data
-      }))
-  }
+  //   generatePlaylist(accessToken)
+  //     .then(data => this.setState({
+  //       playlist_id: data
+  //     }))
+  // }
 
   generatePlaylistLink(id) {
     var playlist_link = "https://open.spotify.com/embed/playlist/" + String(id);
@@ -98,28 +99,28 @@ class Dashboard extends React.Component {
   get_WeatherIcon(icons, rangeId) {
     switch (true) {
       case rangeId >= 200 && rangeId < 232:
-        this.setState({ icon: icons.Thunderstorm });
+        this.setState({ icon: icons.Thunderstorm, weatherType: "Rain" });
         break;
       case rangeId >= 300 && rangeId <= 321:
-        this.setState({ icon: icons.Drizzle });
+        this.setState({ icon: icons.Drizzle, weatherType: "Rain" });
         break;
       case rangeId >= 500 && rangeId <= 521:
-        this.setState({ icon: icons.Rain });
+        this.setState({ icon: icons.Rain, weatherType: "Rain" });
         break;
       case rangeId >= 600 && rangeId <= 622:
-        this.setState({ icon: icons.Snow });
+        this.setState({ icon: icons.Snow, weatherType: "Snow" });
         break;
       case rangeId >= 701 && rangeId <= 781:
-        this.setState({ icon: icons.Atmosphere });
+        this.setState({ icon: icons.Atmosphere, weatherType: "Sun" });
         break;
       case rangeId === 800:
-        this.setState({ icon: icons.Clear });
+        this.setState({ icon: icons.Clear, weatherType: "Sun" });
         break;
       case rangeId >= 801 && rangeId <= 804:
-        this.setState({ icon: icons.Clouds });
+        this.setState({ icon: icons.Clouds, weatherType: "Cloud" });
         break;
       default:
-        this.setState({ icon: icons.Clouds });
+        this.setState({ icon: icons.Clouds, weatherType: "Cloud" });
     }
   }
 
@@ -214,9 +215,20 @@ class Dashboard extends React.Component {
         description: response.weather[0].description,
         error: false
       });
-      temp = this.convertToFar(response.main.temp);
+      const temp = this.convertToFar(response.main.temp);
+      const weatherType = this.state.weatherType;
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+
+      //wait for weather then display playlist
+      let parsed = querystring.parse(window.location.search);
+      let accessToken = parsed.access_token;
+      console.log(parsed);
+      
+      generatePlaylist(accessToken, temp, weatherType)
+        .then(data => this.setState({
+          playlist_id: data
+        }))
     } else {
       this.setState({
         error: true
@@ -330,7 +342,7 @@ class Dashboard extends React.Component {
             <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           </div>
 
-          
+
             {/* <table className="table">
               <thead>
                 <tr>

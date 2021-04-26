@@ -39,7 +39,7 @@ function getTopGenres(data) {
 }
 
 // get a list of recommended tracks based on given top genre seeds
-async function getTracksFromSeeds(access_token, topGenres, topArtists) {
+async function getTracksFromSeeds(access_token, topGenres, topArtists, temperature, weather_type) {
     const accessToken = access_token;
     const genres = topGenres;
     const limit = 10;
@@ -59,8 +59,17 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists) {
     seedGenres = seedGenres.replace('&', "-n-");        // rock & roll  ->  rock--n--roll ??
 
     const topArtistID = topArtists.items[0].id;
+    const danceability = [0.694, 0.6285, 0.551]; 
+    const energy = [0.677, 0.5274, 0.513, 0.502];       
+    const loudness = [-8.953, -6.6405, -4.922];    
+    const speechiness = [0.156, 0.110, 0.081];  
+    const valence = [0.669, 0.463, 0.329];      
     
-    const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}`, {
+    //Checking temperature and weather_type
+    
+
+
+    const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}&target_danceability=${danceability[0]}&target_energy=${energy[0]}&target_loudness=${loudness[0]}&target_speechiness=${speechiness[0]}&target_valence=${valence[0]}`, {
         method: 'GET',
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
@@ -106,12 +115,15 @@ async function createPlaylist(access_token, user_id, tracksData) {
 }
 
 // generate a playlist given restrictions with consideration of user's top genres
-async function generatePlaylist(access_token) {
+async function generatePlaylist(access_token, temp, weatherType) {
     const accessToken = access_token;
     const topArtists = await getTopArtists(accessToken);
     const topGenres = await getTopGenres(topArtists);
+
+    const temperature = temp;
+    const weather_type = weatherType;
     //const topTracks = await getTopTracks(accessToken);                                    // currently not using this but kept for just in case
-    const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists);
+    const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists, temperature, weather_type);
 
     // get current user id
     const userInfoCall = await fetch(`https://api.spotify.com/v1/me`, {
