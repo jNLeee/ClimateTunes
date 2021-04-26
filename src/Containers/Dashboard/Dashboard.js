@@ -241,7 +241,7 @@ class Dashboard extends React.Component {
           </ReactBootStrap.Navbar>
         </div>
         <Row className="main-row">
-        <Col className="input-column" lg={3}>
+        <Col className="input-column" xl={2}>
         
           
             <Form loadweather={this.getWeather} error={this.state.error}/>
@@ -271,7 +271,7 @@ class Dashboard extends React.Component {
           
 
         </Col>
-        <Col>
+        <Col xl>
           <div className=
             {temp>90 ? 'jumbotron hot' : 
               (temp>75 ? 'jumbotron warm' :
