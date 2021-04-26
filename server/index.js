@@ -7,7 +7,6 @@ const router = express.Router();
 const app = express();
 const spotify = require('./credentials');
 var SpotifyWebApi = require('spotify-web-api-node');
-const getAccessToken = require('./getAccessToken');
 const Datastore = require('nedb');
 const request = require('request');
 

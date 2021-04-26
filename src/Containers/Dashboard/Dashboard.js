@@ -16,6 +16,7 @@ import Chilly from "./Assets/Chilly-bg.jpg"
 import Breezy from "./Assets/Breezy-bg.jpg"
 import Warm from "./Assets/Warm-bg.jpg"
 import Hot from "./Assets/Hot-bg.jpg"
+import generatePlaylist from "./PlaylistGeneration";
 const querystring = require("querystring");
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
@@ -82,20 +83,15 @@ class Dashboard extends React.Component {
     let parsed = querystring.parse(window.location.search);
     let accessToken = parsed.access_token;
     console.log(parsed);
-
-    fetch('https://api.spotify.com/v1/me/playlists', {
-      headers: {"Authorization": 'Bearer ' + accessToken}
-    })
-    .then(response => response.json())
-        .then(data => this.setState({
-          playlist_id: data.items[0].id
-        })) 
     
-    
+    generatePlaylist(accessToken)
+      .then(data => this.setState({
+        playlist_id: data
+      }))
   }
 
   generatePlaylistLink(id) {
-    var playlist_link = "https://open.spotify.com/embed/playlist/" + id;
+    var playlist_link = "https://open.spotify.com/embed/playlist/" + String(id);
     return playlist_link;
   }
 
@@ -190,34 +186,6 @@ class Dashboard extends React.Component {
       });
     }
   }
-
-  //get playlist link
-
-  // generatePlaylistLink() {
-
-  //   let parsed = querystring.parse(window.location.search);
-  //   let accessToken = parsed.access_token;
-
-  //   fetch('https://api.spotify.com/v1/me/playlists', {
-  //     headers: {"Authorization": 'Bearer ' + accessToken}
-  //   })
-  //   .then(response => response.json())
-  //     // .then(data => console.log(data))
-  //       .then(data => this.setState({
-  //         playlist_id: data.items[0].id
-  //       })) 
-
-
-
-  //   const id = this.state.playlists_id;
-  //   // .then(response => response.json())
-  //   //     .then(data => this.setState({
-  //   //       playlist_id: data.items[0].id
-  //   //     })) 
-
-  //   var playlist_link = `https://open.spotify.com/embed/playlist/${id}`;
-  //   this.state.playlist_link = playlist_link;
-  // }
 
   getWeather = async (e) => {
 
@@ -359,7 +327,7 @@ class Dashboard extends React.Component {
           <div className="top-tracks">
             <h4>Top Recommended Tracks</h4>
             <div className="spotify-player"> 
-            <iframe src={this.generatePlaylistLink(String(this.state.playlist_id))} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           </div>
             {/* <table className="table">
               <thead>
