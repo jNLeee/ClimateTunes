@@ -321,13 +321,13 @@ class Dashboard extends React.Component {
             <div className="top-tracks">
               <h4>Top Recommended Tracks</h4>
               <div className="spotify-player"> 
-              <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="350vh" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
                 {/* <div>
                   <Search searchsong={this.getSpotify} error={this.state.error}/>
                 </div>
                 
-                <h5>Song Name = {this.state.songName}</h5>
+                <h5>Song Name = {this.state.songName}</h5>  
                 <h5>Artist Name = {this.state.artistName}</h5>
                 <h5>TrackID = {this.state.trackID}</h5>
                 <h5>Acousticness = {this.state.acousticness}</h5>
