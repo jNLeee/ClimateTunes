@@ -183,6 +183,7 @@ async function createPlaylist(access_token, user_id, trackURIs) {
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const playlist = await makePlaylist.json();
+
     const playlistID = playlist.id;
 
     // add tracks from seed to playlist

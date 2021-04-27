@@ -19,6 +19,7 @@ function calcEuclidean(userProfile, builtMatrix) {
 function getTopTen(simArray, builtMatrix) {
     var index;
     var topTen = "";
+    var topTenIndexArray = [];
     for(var i=0; i<10; i++) {
         index = simArray.indexOf(Math.max(...simArray));
         simArray[index] = -1;
