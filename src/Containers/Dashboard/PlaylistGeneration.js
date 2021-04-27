@@ -39,7 +39,7 @@ function getTopGenres(data) {
 }
 
 // get a list of recommended tracks based on given top genre seeds
-async function getTracksFromSeeds(access_token, topGenres, topArtists, temperature, weather_type) {
+async function getTracksFromSeeds(access_token, topGenres, topArtists, temperature, weather_type, mood) {
     const accessToken = access_token;
     const genres = topGenres;
     const limit = 10;
@@ -69,9 +69,33 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
     var speechiness = 0.156;
     const valenceArray = [0.669, 0.463, 0.329]; 
     var valence = 0.669;     
+
+    //Checking Mood
+    switch(mood) {
+        case mood == "Happy":
+            danceability = danceabilityArray[0];
+            speechiness = speechinessArray[0];
+            valence = valenceArray[0];
+            break;
+        case mood == "Angry":
+            danceability = danceabilityArray[1];
+            speechiness = speechinessArray[1];
+            valence = valenceArray[1];
+            break;
+        case mood == "Sad":
+            danceability = danceabilityArray[2];
+            speechiness = speechinessArray[2];
+            valence = valenceArray[2];
+            break;
+    }
+    console.log("Danceability: " + danceability);
+    console.log("Speechiness: " +  speechiness);
+    console.log("Valence: " + valence);
     
     //Checking temperature and weather_type
-    switch(temperature) {
+    temperature = parseInt(temperature);
+    // console.log(temperature);
+    switch(true) {
         case temperature<60: 
             loudness = loudnessArray[0];
             break;
@@ -84,8 +108,9 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
         default: 
             loudness = loudnessArray[0];
     }
-    console.log("Temperature: " + temperature);
-    console.log("Loudness: " + loudness);
+
+    // console.log("Temperature: " + temperature);
+    // console.log("Loudness: " + loudness);
 
     switch(weather_type) {
         case weather_type == "Sun":
@@ -103,8 +128,8 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
         default: 
             energy = energyArray[0];
     }
-    console.log("Energy: " + energy);
-    console.log("Weather_type: " + weather_type);
+    // console.log("Energy: " + energy);
+    // console.log("Weather_type: " + weather_type);
 
 
     const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}&target_danceability=${danceability}&target_energy=${energy}&target_loudness=${loudness}&target_speechiness=${speechiness}&target_valence=${valence}`, {
@@ -153,12 +178,12 @@ async function createPlaylist(access_token, user_id, tracksData) {
 }
 
 // generate a playlist given restrictions with consideration of user's top genres
-async function generatePlaylist(access_token, temperature, weather_type) {
+async function generatePlaylist(access_token, temperature, weather_type, mood) {
     const accessToken = access_token;
     const topArtists = await getTopArtists(accessToken);
     const topGenres = await getTopGenres(topArtists);
     //const topTracks = await getTopTracks(accessToken);                                    // currently not using this but kept for just in case
-    const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists, temperature, weather_type);
+    const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists, temperature, weather_type, mood);
 
     // get current user id
     const userInfoCall = await fetch(`https://api.spotify.com/v1/me`, {

@@ -66,8 +66,14 @@ class Dashboard extends React.Component {
       tempo: undefined,
       valence: undefined,
       playlists_id: undefined,
-      playlist_link: undefined
+      playlist_link: undefined,
+      
+      //mood
+      mood: 'Sad'
     };
+
+
+
 
     this.weatherIcon = {
       Thunderstorm: "wi-thunderstorm",
@@ -78,7 +84,9 @@ class Dashboard extends React.Component {
       Clear: "wi-day-sunny",
       Clouds: "wi-day-fog"
     };
+
   }
+
 
   // componentDidMount() {
   //   let parsed = querystring.parse(window.location.search);
@@ -225,7 +233,7 @@ class Dashboard extends React.Component {
       let accessToken = parsed.access_token;
       console.log(parsed);
       
-      generatePlaylist(accessToken, temperature, this.state.weatherType)
+      generatePlaylist(accessToken, temperature, this.state.weatherType, this.state.mood)
         .then(data => this.setState({
           playlist_id: data
         }))
@@ -264,6 +272,7 @@ class Dashboard extends React.Component {
           <br></br>
       
           <div className="dropdown">
+
           <ReactBootStrap.Dropdown>
             <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle" variant="btn-sm">
               Choose your mood:
@@ -274,7 +283,7 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Dropdown.Item href="#/action-2">Sad</ReactBootStrap.Dropdown.Item>
               <ReactBootStrap.Dropdown.Item href="#/action-3">Angry</ReactBootStrap.Dropdown.Item>
             </ReactBootStrap.Dropdown.Menu>
-        </ReactBootStrap.Dropdown>
+          </ReactBootStrap.Dropdown>
           </div>
           
           <br></br>
