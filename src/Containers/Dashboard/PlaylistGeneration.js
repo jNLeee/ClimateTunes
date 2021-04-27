@@ -58,31 +58,34 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
     seedGenres = seedGenres.replace(/ /g, "-");        
     seedGenres = seedGenres.replace('&', "-n-");        // rock & roll  ->  rock--n--roll ??
 
-    const topArtistID = topArtists.items[0].id;
+    temp = Math.floor(Math.random() * 5);
+    const topArtistID = topArtists.items[temp].id;
     const danceabilityArray = [0.694, 0.6285, 0.551]; 
-    var danceability = 0.694;
+    var danceability = 0;
     const energyArray = [0.677, 0.5274, 0.513, 0.502];  
     var energy = 0;     
     const loudnessArray = [-8.953, -6.6405, -4.922];   
     var loudness = 0; 
     const speechinessArray = [0.156, 0.110, 0.081];  
-    var speechiness = 0.156;
+    var speechiness = 0;
     const valenceArray = [0.669, 0.463, 0.329]; 
-    var valence = 0.669;     
+    var valence = 0;     
 
     //Checking Mood
+    //console.log("mood: " + mood);
+    mood = String(mood);
     switch(mood) {
-        case mood == "Happy":
+        case "Happy":
             danceability = danceabilityArray[0];
             speechiness = speechinessArray[0];
             valence = valenceArray[0];
             break;
-        case mood == "Angry":
+        case "Angry":
             danceability = danceabilityArray[1];
             speechiness = speechinessArray[1];
             valence = valenceArray[1];
             break;
-        case mood == "Sad":
+        case "Sad":
             danceability = danceabilityArray[2];
             speechiness = speechinessArray[2];
             valence = valenceArray[2];
