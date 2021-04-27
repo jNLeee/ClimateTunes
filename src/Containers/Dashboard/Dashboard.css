@@ -11,7 +11,10 @@
     background: rgb(197, 143, 143) !important;
     border:  rgb(197, 143, 143) !important;
     overflow: hidden !important;
-
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+    border-radius: 5px;
+    width: 175px;
+    height: 35px;
 }
 
 .dropdown-toggle:active, .open .dropdown-toggle {
