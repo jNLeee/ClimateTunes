@@ -17,6 +17,7 @@ import Breezy from "./Assets/Breezy-bg.jpg"
 import Warm from "./Assets/Warm-bg.jpg"
 import Hot from "./Assets/Hot-bg.jpg"
 import generatePlaylist from "./PlaylistGeneration";
+import generateUserProfileVector from './calculateUserProfile';
 
 const querystring = require("querystring");
 
@@ -88,16 +89,18 @@ class Dashboard extends React.Component {
 
   }
   
-  // componentDidMount() {
-  //   let parsed = querystring.parse(window.location.search);
-  //   let accessToken = parsed.access_token;
-  //   console.log(parsed);
+  componentDidMount() {
+    let parsed = querystring.parse(window.location.search);
+    let accessToken = parsed.access_token;
+    console.log(parsed);
     
-  //   generatePlaylist(accessToken)
-  //     .then(data => this.setState({
-  //       playlist_id: data
-  //     }))
-  // }
+    // generatePlaylist(accessToken)
+    //   .then(data => this.setState({
+    //     playlist_id: data
+    //   }))
+
+    generateUserProfileVector(accessToken);
+  }
 
   // sets the mood based on dropdown. callback function
   change = (event) => {
