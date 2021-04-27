@@ -1,6 +1,7 @@
 import calcMatrix from "./calcMatrix";
 import euclideanSimilarity from "./calcSimilarity";
 import generateUserProfileVector from "./calculateUserProfile";
+import calcRMSE from "./RMSE";
 
 // get user's top 5 artists
 async function getTopArtists(access_token) {
@@ -148,6 +149,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
     }
     // console.log("Energy: " + energy);
     // console.log("Weather_type: " + weather_type);
+    var finalAttribArray = [danceability, energy, loudness, speechiness, valence];
 
     const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}&target_danceability=${danceability}&target_energy=${energy}&target_loudness=${loudness}&target_speechiness=${speechiness}&target_valence=${valence}`, {
         method: 'GET',
@@ -165,7 +167,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
         }
     }
     console.log(fiftyTrackIDs);
-    return [response, fiftyTrackIDs];
+    return [response, fiftyTrackIDs, finalAttribArray];
 }
 
 // create a playlist and add tracks to the playlist. returns playlist id
@@ -211,25 +213,28 @@ async function generatePlaylist(access_token, temperature, weather_type, mood) {
     const topGenres = await getTopGenres(topArtists);
     //const topTracks = await getTopTracks(accessToken);                                    // currently not using this but kept for just in case
     const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists, temperature, weather_type, mood);
-
+    console.log("Tracks From Seeds.");
+    console.log(tracksFromSeed);
+    const attribArray = tracksFromSeed[2];
+    console.log("attribArray");
+    console.log(attribArray);
 
     const topFiftyTracks = await getTopFiftyTracksAudioFeatures(access_token, tracksFromSeed[1]);
-
     const builtMatrix = calcMatrix(topFiftyTracks);
     const userProfile = await generateUserProfileVector(access_token);
-    console.log(builtMatrix);
-
     const topTen = euclideanSimilarity(userProfile, builtMatrix);
 
+    const topTenArray = topTen[1];
+    const rmse = calcRMSE(attribArray, topTenArray);
     // get current user id
-    const userInfoCall = await fetch(`https://api.spotify.com/v1/me`, {
+    const userInfoCall = await fetch('https://api.spotify.com/v1/me', {
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const userInfo = await userInfoCall.json();
     const userID = userInfo.id;
-    
+
     // create a playlist
-    const playlistID = await createPlaylist(accessToken, userID, topTen);
+    const playlistID = await createPlaylist(accessToken, userID, topTen[0]);
 
     return playlistID;
 }

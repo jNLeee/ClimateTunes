@@ -14,7 +14,7 @@ function calcMatrix(audioFeaturesArray) {
         currVector.push(currTrack.energy);
         currVector.push(currTrack.instrumentalness);
         currVector.push(currTrack.liveness);
-        loudness = currTrack.loudness / (-60.0);
+        loudness = 1.0 - (currTrack.loudness / (-60.0));
         currVector.push(loudness);
         currVector.push(currTrack.speechiness);
         tempo = 1.0 - (60.0 / currTrack.tempo);

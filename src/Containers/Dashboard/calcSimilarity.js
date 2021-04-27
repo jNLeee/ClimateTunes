@@ -19,10 +19,11 @@ function calcEuclidean(userProfile, builtMatrix) {
 function getTopTen(simArray, builtMatrix) {
     var index;
     var topTen = "";
-    var topTenIndexArray = [];
+    var topTenArray = [];
     for(var i=0; i<10; i++) {
         index = simArray.indexOf(Math.max(...simArray));
         simArray[index] = -1;
+        topTenArray.push(builtMatrix[index]);
 
         if(i != 9) {
             topTen += builtMatrix[index][9] + "%2C";
@@ -31,7 +32,7 @@ function getTopTen(simArray, builtMatrix) {
         }
     }
 
-    return topTen;
+    return [topTen, topTenArray];
 }
 
 function euclideanSimilarity(userProfile, builtMatrix) {
