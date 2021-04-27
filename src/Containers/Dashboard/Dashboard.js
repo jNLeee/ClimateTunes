@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
       speed: undefined,
       weather: "",
       icon: undefined,
-      weatherType: undefined,
+      weatherType: "",
       error: false,
 
       //spotify
@@ -216,16 +216,16 @@ class Dashboard extends React.Component {
         error: false
       });
       const temperature = this.state.temp;
-      const weatherType = this.state.weatherType;
+      // const weather_type = this.state.weatherType;
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
-
+      console.log("Weather Type: " + this.state.weatherType);
       //wait for weather then display playlist
       let parsed = querystring.parse(window.location.search);
       let accessToken = parsed.access_token;
       console.log(parsed);
       
-      generatePlaylist(accessToken, temp, weatherType)
+      generatePlaylist(accessToken, temperature, this.state.weatherType)
         .then(data => this.setState({
           playlist_id: data
         }))
@@ -354,7 +354,7 @@ class Dashboard extends React.Component {
               </thead> */}
               {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
         
-              {/* <div>
+              <div>
                 <Search searchsong={this.getSpotify} error={this.state.error}/>
               </div>
               
@@ -369,7 +369,7 @@ class Dashboard extends React.Component {
               <h5>Loudness = {this.state.loudness}</h5>
               <h5>Speechiness = {this.state.speechiness}</h5>
               <h5>Tempo = {this.state.tempo}</h5>
-              <h5>Valence = {this.state.valence}</h5>  */}
+              <h5>Valence = {this.state.valence}</h5> 
 
 
             {/* {/* </table> */}
