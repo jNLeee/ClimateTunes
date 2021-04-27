@@ -31,9 +31,9 @@ async function getTopTracks(access_token) {
     return response;
 }
 
+// gets audio features for the given fifty tracks
 async function getTopFiftyTracksAudioFeatures(access_token, fiftyTrackIDs) {
     const accessToken = access_token;
-
     const id = fiftyTrackIDs;
 
     const api_call = await fetch(`https://api.spotify.com/v1/audio-features?ids=${id}`, {
@@ -54,6 +54,7 @@ function getTopGenres(data) {
     console.log(topGenres);
     return topGenres;
 }
+
 // get a list of recommended tracks based on given top genre seeds
 async function getTracksFromSeeds(access_token, topGenres, topArtists, temperature, weather_type, mood) {
     const accessToken = access_token;
@@ -88,7 +89,6 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
     var valence = 0;     
 
     //Checking Mood
-    //console.log("mood: " + mood);
     mood = String(mood);
     switch(mood) {
         case "Happy":
@@ -101,19 +101,15 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
             speechiness = speechinessArray[1];
             valence = valenceArray[1];
             break;
-        case "Sad":
+        case "Default":
             danceability = danceabilityArray[2];
             speechiness = speechinessArray[2];
             valence = valenceArray[2];
             break;
     }
-    console.log("Danceability: " + danceability);
-    console.log("Speechiness: " +  speechiness);
-    console.log("Valence: " + valence);
     
     //Checking temperature and weather_type
     temperature = parseInt(temperature);
-    // console.log(temperature);
     switch(true) {
         case temperature<60: 
             loudness = loudnessArray[0];
@@ -127,9 +123,6 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
         default: 
             loudness = loudnessArray[0];
     }
-
-    // console.log("Temperature: " + temperature);
-    // console.log("Loudness: " + loudness);
 
     switch(weather_type) {
         case weather_type == "Sun":
@@ -147,8 +140,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
         default: 
             energy = energyArray[0];
     }
-    // console.log("Energy: " + energy);
-    // console.log("Weather_type: " + weather_type);
+
     var finalAttribArray = [danceability, energy, loudness, speechiness, valence];
 
     const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}&target_danceability=${danceability}&target_energy=${energy}&target_loudness=${loudness}&target_speechiness=${speechiness}&target_valence=${valence}`, {
@@ -156,7 +148,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const response = await api_call.json();
-    console.log(response);
+
     //looping all 50 tracks and getting the ids
     var fiftyTrackIDs = "";
     for(var i = 0; i < 50; i++) {
@@ -166,7 +158,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
             fiftyTrackIDs += (response.tracks[i].id);
         }
     }
-    console.log(fiftyTrackIDs);
+    
     return [response, fiftyTrackIDs, finalAttribArray];
 }
 
@@ -185,17 +177,7 @@ async function createPlaylist(access_token, user_id, trackURIs) {
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const playlist = await makePlaylist.json();
-
     const playlistID = playlist.id;
-
-    // add tracks from seed to playlist
-    // var trackURIs = "";
-    // for (var i = 0; i < Object.keys(dataFromTracks.tracks).length; i++){
-    //     trackURIs += dataFromTracks.tracks[i].uri;
-    //     if (i != Object.keys(dataFromTracks.tracks).length - 1) {
-    //         trackURIs += "%2C";
-    //     }
-    // }
 
     const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks?uris=${trackURIs}`, {
         method: 'POST',    
@@ -209,31 +191,31 @@ async function createPlaylist(access_token, user_id, trackURIs) {
 // generate a playlist given restrictions with consideration of user's top genres
 async function generatePlaylist(access_token, temperature, weather_type, mood) {
     const accessToken = access_token;
+    
+    // get top genres from user's top artists
     const topArtists = await getTopArtists(accessToken);
     const topGenres = await getTopGenres(topArtists);
-    //const topTracks = await getTopTracks(accessToken);                                    // currently not using this but kept for just in case
+    
+    // get audio features of top 50 tracks based on the genre and artist seeds
     const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists, temperature, weather_type, mood);
-    console.log("Tracks From Seeds.");
-    console.log(tracksFromSeed);
     const attribArray = tracksFromSeed[2];
-    console.log("attribArray");
-    console.log(attribArray);
-
     const topFiftyTracks = await getTopFiftyTracksAudioFeatures(access_token, tracksFromSeed[1]);
+
+    // build a matrix given the top 50 tracks and calculate euclidean similarity for each track to the user profile
     const builtMatrix = calcMatrix(topFiftyTracks);
     const userProfile = await generateUserProfileVector(access_token);
     const topTen = euclideanSimilarity(userProfile, builtMatrix);
 
+    // calculate the RMSE for the chosen top 10 tracks
     const topTenArray = topTen[1];
     const rmse = calcRMSE(attribArray, topTenArray);
-    // get current user id
+
+    // get current user id and use it to create final playlist with top 10 songs
     const userInfoCall = await fetch('https://api.spotify.com/v1/me', {
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const userInfo = await userInfoCall.json();
     const userID = userInfo.id;
-
-    // create a playlist
     const playlistID = await createPlaylist(accessToken, userID, topTen[0]);
 
     return playlistID;

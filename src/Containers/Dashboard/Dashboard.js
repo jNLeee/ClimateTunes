@@ -74,9 +74,6 @@ class Dashboard extends React.Component {
       mood: 'Sad'
     };
 
-
-
-
     this.weatherIcon = {
       Thunderstorm: "wi-thunderstorm",
       Drizzle: "wi-sleet",
@@ -92,21 +89,13 @@ class Dashboard extends React.Component {
   componentDidMount() {
     let parsed = querystring.parse(window.location.search);
     let accessToken = parsed.access_token;
-    console.log(parsed);
-    
-    // generatePlaylist(accessToken)
-    //   .then(data => this.setState({
-    //     playlist_id: data
-    //   }))
-
-    generateUserProfileVector(accessToken);
+    //console.log(parsed);
   }
 
   // sets the mood based on dropdown. callback function
   change = (event) => {
     console.log(event.target.value);
     this.state.mood = String(event.target.value);
-    console.log(this.state.mood);
   };
 
   generatePlaylistLink(id) {
@@ -149,7 +138,6 @@ class Dashboard extends React.Component {
 
   getSpotify = async (e) => {
     e.preventDefault();
-
     let parsed = querystring.parse(window.location.search);
     let accessToken = parsed.access_token;
 
@@ -160,10 +148,7 @@ class Dashboard extends React.Component {
       const api_call = await fetch(`https://api.spotify.com/v1/search?q=${song}%20${artist}&type=track`, {
         headers: {"Authorization": 'Bearer ' + accessToken}
       });
-
       const response = await api_call.json();
-  
-      console.log(response);
 
       this.setState( {
         trackID: response.tracks.items[0].id,
@@ -182,10 +167,7 @@ class Dashboard extends React.Component {
       const api_call = await fetch(`https://api.spotify.com/v1/audio-features/${trackID}`, {
         headers: {"Authorization": 'Bearer ' + accessToken}
       });
-
       const response = await api_call.json();
-  
-      console.log(response);
 
       this.setState( {
         acousticness: response.acousticness,
@@ -207,19 +189,14 @@ class Dashboard extends React.Component {
   }
 
   getWeather = async (e) => {
-
     e.preventDefault();
-
     const city = e.target.elements.city.value;
 
     if(city) {
       const api_call = await fetch(
         `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`
       );
-  
       const response = await api_call.json();
-  
-      console.log(response);
   
       this.setState( {
         city:`${response.name}`,
@@ -234,10 +211,10 @@ class Dashboard extends React.Component {
         error: false
       });
       const temperature = this.state.temp;
-      // const weather_type = this.state.weatherType;
 
       this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
       console.log("Weather Type: " + this.state.weatherType);
+
       //wait for weather then display playlist
       let parsed = querystring.parse(window.location.search);
       let accessToken = parsed.access_token;
@@ -258,8 +235,8 @@ class Dashboard extends React.Component {
     return (
       <body>
         <div classname="Navbar">
-        <ReactBootStrap.Navbar className="color-nav" variant="dark" expand="lg">
-            <ReactBootStrap.Navbar.Brand href="./Dashboard">Climate Tunes</ReactBootStrap.Navbar.Brand>
+          <ReactBootStrap.Navbar className="color-nav" variant="dark" expand="lg">
+            <ReactBootStrap.Navbar.Brand href="./Dashboard"> Climate Tunes</ReactBootStrap.Navbar.Brand>
             <ReactBootStrap.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <ReactBootStrap.Navbar.Collapse id="basic-navbar-nav">
               <ReactBootStrap.Nav className="mr-auto">
@@ -270,121 +247,101 @@ class Dashboard extends React.Component {
           </ReactBootStrap.Navbar>
         </div>
         <Row className="main-row">
-        <Col className="input-column" xl={2}>
-          {/* <Form loadweather={this.getWeather} error={this.state.error}/> */}
-          <br></br>
-          <br></br>
+          <Col className="input-column" xl={2}>
+            {/* <Form loadweather={this.getWeather} error={this.state.error}/> */}
+            <br></br>
+            <br></br>
 
-          <div className="dropdown">
-            <ReactBootStrap.Dropdown>
-              <div>
-                <select className ="dropdown-toggle" id="lang" onChange={this.change} value={this.state.value}>
-                  <option value="">Choose your mood:</option>
-                  <option value="Happy">Happy</option>
-                  <option value="Sad">Sad</option>
-                  <option value="Angry">Angry</option>
-                </select>
-              </div>
-            </ReactBootStrap.Dropdown>
-          </div>
-
-          <Form loadweather={this.getWeather} error={this.state.error}/>
-          
-        </Col>
-        <Col xl>
-          <div className=
-            {this.state.temp>90 ? 'jumbotron hot' : 
-              (this.state.temp>75 ? 'jumbotron warm' :
-                (this.state.temp>60 ? 'jumbotron breezy' :
-                  (this.state.temp>32 ? 'jumbotron chilly' :
-                    (this.state.temp<33 ? 'jumbotron cold' :
-                      'jumbotron'
+            <div className="dropdown">
+              <ReactBootStrap.Dropdown>
+                <div>
+                  <select className ="dropdown-toggle" id="lang" onChange={this.change} value={this.state.value}>
+                    <option value="">Choose your mood:</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Sad">Sad</option>
+                    <option value="Default">Default</option>
+                  </select>
+                </div>
+              </ReactBootStrap.Dropdown>
+            </div>
+            <Form loadweather={this.getWeather} error={this.state.error}/>
+            
+          </Col>
+          <Col xl className="noPadding">
+            <div className=
+              {this.state.temp>90 ? 'jumbotron hot' : 
+                (this.state.temp>75 ? 'jumbotron warm' :
+                  (this.state.temp>60 ? 'jumbotron breezy' :
+                    (this.state.temp>32 ? 'jumbotron chilly' :
+                      (this.state.temp<33 ? 'jumbotron cold' :
+                        'jumbotron'
+                      )
                     )
                   )
                 )
-              )
-            }>
-
-            
-            <div>
-              <Row>
-                <Col lg>
-                  <div className="city">
-                    <City
-                      city={this.state.city} 
-                    />
-                  </div>
-                  <div className="weather">
-                    <Weather 
-                      city={this.state.city} 
-                      country={this.state.country}
-                      temp={this.state.temp}
-                      temp_max={this.state.temp_max}
-                      temp_min={this.state.temp_min}
-                      description={this.state.description}
-                      weatherIcon={this.state.icon}
-                    />
-                  </div>
-                </Col>
-                <Col className="jumbo-right" lg>
-                  <div className="temperature">
-                  <Temp
-                    temp={this.state.temp}
-                    temp_max={this.state.temp_max}
-                    temp_min={this.state.temp_min}
-                    visibility={this.state.visibility}
-                    humidity={this.state.humidity}
-                    speed={this.state.speed}
-                  />
-                </div>
-                </Col>
-              </Row>
+              }>
               
-              
-            </div>
-          </div>
-
-          <div className="top-tracks">
-            <h4>Top Recommended Tracks</h4>
-            <div className="spotify-player"> 
-            <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-          </div>
-
-
-            {/* <table className="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Song</th>
-                  <th>Artist</th>
-                  <th>Time</th>
-                </tr>
-              </thead> */}
-              {/* <tbody>{musicHistory.map((e, index) => TableItem(e, index))}</tbody> */}
-        
               <div>
-                <Search searchsong={this.getSpotify} error={this.state.error}/>
+                <Row>
+                  <Col lg>
+                    <div className="city">
+                      <City
+                        city={this.state.city} 
+                      />
+                    </div>
+                    <div className="weather">
+                      <Weather 
+                        city={this.state.city} 
+                        country={this.state.country}
+                        temp={this.state.temp}
+                        temp_max={this.state.temp_max}
+                        temp_min={this.state.temp_min}
+                        description={this.state.description}
+                        weatherIcon={this.state.icon}
+                      />
+                    </div>
+                  </Col>
+                  <Col className="jumbo-right" lg>
+                    <div className="temperature">
+                      <Temp
+                        temp={this.state.temp}
+                        temp_max={this.state.temp_max}
+                        temp_min={this.state.temp_min}
+                        visibility={this.state.visibility}
+                        humidity={this.state.humidity}
+                        speed={this.state.speed}
+                      />
+                    </div>
+                  </Col>
+                </Row>
               </div>
-              
-              <h5>Song Name = {this.state.songName}</h5>
-              <h5>Artist Name = {this.state.artistName}</h5>
-              <h5>TrackID = {this.state.trackID}</h5>
-              <h5>Acousticness = {this.state.acousticness}</h5>
-              <h5>Danceability = {this.state.danceability}</h5>
-              <h5>Energy = {this.state.energy}</h5>
-              <h5>Instrumentalness = {this.state.instrumentalness}</h5>
-              <h5>Liveness = {this.state.liveness}</h5>
-              <h5>Loudness = {this.state.loudness}</h5>
-              <h5>Speechiness = {this.state.speechiness}</h5>
-              <h5>Tempo = {this.state.tempo}</h5>
-              <h5>Valence = {this.state.valence}</h5> 
+ 
+            </div>
 
-
-            {/* {/* </table> */}
-          </div>
-        </Col>
+            <div className="top-tracks">
+              <h4>Top Recommended Tracks</h4>
+              <div className="spotify-player"> 
+              <iframe src={this.generatePlaylistLink(this.state.playlist_id)} width="100%" height="500px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+                {/* <div>
+                  <Search searchsong={this.getSpotify} error={this.state.error}/>
+                </div>
+                
+                <h5>Song Name = {this.state.songName}</h5>
+                <h5>Artist Name = {this.state.artistName}</h5>
+                <h5>TrackID = {this.state.trackID}</h5>
+                <h5>Acousticness = {this.state.acousticness}</h5>
+                <h5>Danceability = {this.state.danceability}</h5>
+                <h5>Energy = {this.state.energy}</h5>
+                <h5>Instrumentalness = {this.state.instrumentalness}</h5>
+                <h5>Liveness = {this.state.liveness}</h5>
+                <h5>Loudness = {this.state.loudness}</h5>
+                <h5>Speechiness = {this.state.speechiness}</h5>
+                <h5>Tempo = {this.state.tempo}</h5>
+                <h5>Valence = {this.state.valence}</h5>  */}
+            </div>
+          </Col>
         </Row>
-        
       </body>
     );
   }

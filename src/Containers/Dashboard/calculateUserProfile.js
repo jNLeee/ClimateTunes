@@ -1,6 +1,6 @@
 import calcMatrix from "./calcMatrix";
 
-// get user's top 50 tracks                                                                          <-- currently not using this but kept it just in case
+// get user's top 50 tracks  
 async function getTopTracks(access_token) {
     const accessToken = access_token;
     const type = "tracks";
@@ -10,7 +10,6 @@ async function getTopTracks(access_token) {
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const response = await api_call.json();
-    //console.log(response.items);
     const itemsArray = response.items;
 
     return itemsArray;
@@ -20,7 +19,6 @@ async function getTopTracks(access_token) {
 async function getAudioFeatures(access_token, tracksData) {
     const accessToken = access_token;
     var trackIDs = "";
-    //console.log(tracksData);
     
     var itemsArray = tracksData;
     for (var i = 0; i < Object.keys(itemsArray).length; i++) {
@@ -29,15 +27,12 @@ async function getAudioFeatures(access_token, tracksData) {
             trackIDs += "%2C";
         }
     }
-    //console.log(trackIDs);
 
     // get array of all audio features for tracks
     const getAudioFeatures = await fetch(`https://api.spotify.com/v1/audio-features?ids=${trackIDs}`, {
         headers: {"Authorization": 'Bearer ' + accessToken}
       });
     const audioFeatures = await getAudioFeatures.json();
-    //console.log(audioFeatures.audio_features);
-
     const audioFeaturesArray = audioFeatures.audio_features;
 
     return audioFeaturesArray;
@@ -57,7 +52,6 @@ function calcUserProfile(userMatrix) {
         finalArray.push(avg);
         currFeature = 0;
     }
-    //console.log(finalArray);
 
     return finalArray;
 }

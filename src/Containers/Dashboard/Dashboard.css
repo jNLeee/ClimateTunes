@@ -6,6 +6,10 @@
     height: 100%;
 }
 
+div.noPadding {
+    padding-left: 0;
+}
+
 .dropdown-toggle{
     color: #fff !important;
     background: rgb(197, 143, 143) !important;
