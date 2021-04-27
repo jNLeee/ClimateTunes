@@ -247,7 +247,6 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Nav className="mr-auto">
                 <ReactBootStrap.Nav.Link href="./Dashboard">Home</ReactBootStrap.Nav.Link>
                 <ReactBootStrap.Nav.Link href="../Help">Getting Started</ReactBootStrap.Nav.Link>
-                <ReactBootStrap.Nav.Link href="#settings">Settings</ReactBootStrap.Nav.Link>
               </ReactBootStrap.Nav>
             </ReactBootStrap.Navbar.Collapse>
           </ReactBootStrap.Navbar>
