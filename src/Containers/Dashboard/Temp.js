@@ -12,13 +12,13 @@ const Temp = (props) => {
                 {minmaxTemp(props.temp_min, props.temp_max)}
             </div>
             <div className="vision">
-                <h2>{vision(props.visibility)} </h2>
+                <h3>{vision(props.visibility)} </h3>
             </div>
             <div className="humid">
-                <h2>{humid(props.humidity)} </h2>
+                <h3>{humid(props.humidity)} </h3>
             </div>
             <div className="wind_speed">
-                <h2>{wind_speed(props.speed)} </h2>
+                <h3>{wind_speed(props.speed)} </h3>
             </div>
         </div>
     );
