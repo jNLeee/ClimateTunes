@@ -17,7 +17,6 @@ import Breezy from "./Assets/Breezy-bg.jpg"
 import Warm from "./Assets/Warm-bg.jpg"
 import Hot from "./Assets/Hot-bg.jpg"
 import generatePlaylist from "./PlaylistGeneration";
-import MySelect from "./Dropdown";
 
 const querystring = require("querystring");
 
@@ -88,8 +87,7 @@ class Dashboard extends React.Component {
     };
 
   }
-
-
+  
   // componentDidMount() {
   //   let parsed = querystring.parse(window.location.search);
   //   let accessToken = parsed.access_token;
@@ -100,6 +98,13 @@ class Dashboard extends React.Component {
   //       playlist_id: data
   //     }))
   // }
+
+  // sets the mood based on dropdown. callback function
+  change = (event) => {
+    console.log(event.target.value);
+    this.state.mood = String(event.target.value);
+    console.log(this.state.mood);
+  };
 
   generatePlaylistLink(id) {
     var playlist_link = "https://open.spotify.com/embed/playlist/" + String(id);
@@ -263,37 +268,24 @@ class Dashboard extends React.Component {
         </div>
         <Row className="main-row">
         <Col className="input-column" xl={2}>
-        
-          
-            <Form loadweather={this.getWeather} error={this.state.error}/>
-          
-          
-          
-             
+          <Form loadweather={this.getWeather} error={this.state.error}/>
           <br></br>
           <br></br>
-      
+
           <div className="dropdown">
-
-          <ReactBootStrap.Dropdown>
-            {/* <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle" variant="btn-sm">
-              Choose your mood:
-            </ReactBootStrap.Dropdown.Toggle>
-
-            <ReactBootStrap.Dropdown.Menu>
-              <ReactBootStrap.Dropdown.Item href="#/action-1">Happy</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-2">Sad</ReactBootStrap.Dropdown.Item>
-              <ReactBootStrap.Dropdown.Item href="#/action-3">Angry</ReactBootStrap.Dropdown.Item>
-            </ReactBootStrap.Dropdown.Menu> */}
-
-            <MySelect></MySelect>
-        </ReactBootStrap.Dropdown>
+            <ReactBootStrap.Dropdown>
+              <div>
+                <select className ="dropdown-toggle" id="lang" onChange={this.change} value={this.state.value}>
+                  <option value="">Choose your mood:</option>
+                  <option value="Happy">Happy</option>
+                  <option value="Sad">Sad</option>
+                  <option value="Angry">Angry</option>
+                </select>
+              </div>
+            </ReactBootStrap.Dropdown>
           </div>
           
           <br></br>
-          
-          
-
         </Col>
         <Col xl>
           <div className=
