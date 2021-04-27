@@ -16,6 +16,8 @@ const Form = props => {
                                 Search
                             </button>
                     </div>
+                    <br></br>
+                    <br></br>
                 </div>
             </form>
         </div>

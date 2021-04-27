@@ -268,7 +268,7 @@ class Dashboard extends React.Component {
         </div>
         <Row className="main-row">
         <Col className="input-column" xl={2}>
-          <Form loadweather={this.getWeather} error={this.state.error}/>
+          {/* <Form loadweather={this.getWeather} error={this.state.error}/> */}
           <br></br>
           <br></br>
 
@@ -284,8 +284,9 @@ class Dashboard extends React.Component {
               </div>
             </ReactBootStrap.Dropdown>
           </div>
+
+          <Form loadweather={this.getWeather} error={this.state.error}/>
           
-          <br></br>
         </Col>
         <Col xl>
           <div className=
