@@ -1,3 +1,4 @@
+import calcMatrix from "./calcMatrix";
 
 // get user's top 5 artists
 async function getTopArtists(access_token) {
@@ -27,6 +28,19 @@ async function getTopTracks(access_token) {
     return response;
 }
 
+async function getTopFiftyTracksAudioFeatures(access_token, fiftyTrackIDs) {
+    const accessToken = access_token;
+
+    const id = fiftyTrackIDs;
+
+    const api_call = await fetch(`https://api.spotify.com/v1/audio-features?ids=${id}`, {
+        headers: {"Authorization": 'Bearer ' + accessToken}
+    });
+    const response = await api_call.json();
+
+    return response.audio_features;
+}
+
 // get user's top genres based on top artist data
 function getTopGenres(data) {
     var topGenres = [];
@@ -37,12 +51,11 @@ function getTopGenres(data) {
     console.log(topGenres);
     return topGenres;
 }
-
 // get a list of recommended tracks based on given top genre seeds
 async function getTracksFromSeeds(access_token, topGenres, topArtists, temperature, weather_type, mood) {
     const accessToken = access_token;
     const genres = topGenres;
-    const limit = 10;
+    const limit = 50;
     var temp = 0;
     var seedGenres = "";
     for (var i = 0; i < 4; i++){
@@ -134,14 +147,23 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
     // console.log("Energy: " + energy);
     // console.log("Weather_type: " + weather_type);
 
-
     const api_call = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&market=US&seed_artists=${topArtistID}&seed_genres=${seedGenres}&target_danceability=${danceability}&target_energy=${energy}&target_loudness=${loudness}&target_speechiness=${speechiness}&target_valence=${valence}`, {
         method: 'GET',
         headers: {"Authorization": 'Bearer ' + accessToken}
     });
     const response = await api_call.json();
     console.log(response);
-    return response;
+    //looping all 50 tracks and getting the ids
+    var fiftyTrackIDs = "";
+    for(var i = 0; i < 50; i++) {
+        if(i != 49) {
+            fiftyTrackIDs += (response.tracks[i].id + "%2C");
+        } else {
+            fiftyTrackIDs += (response.tracks[i].id);
+        }
+    }
+    console.log(fiftyTrackIDs);
+    return [response, fiftyTrackIDs];
 }
 
 // create a playlist and add tracks to the playlist. returns playlist id
@@ -188,6 +210,11 @@ async function generatePlaylist(access_token, temperature, weather_type, mood) {
     //const topTracks = await getTopTracks(accessToken);                                    // currently not using this but kept for just in case
     const tracksFromSeed = await getTracksFromSeeds(accessToken, topGenres, topArtists, temperature, weather_type, mood);
 
+
+    const topFiftyTracks = await getTopFiftyTracksAudioFeatures(access_token, tracksFromSeed[1]);
+
+    const builtMatrix = calcMatrix(topFiftyTracks);
+    console.log(builtMatrix);
     // get current user id
     const userInfoCall = await fetch(`https://api.spotify.com/v1/me`, {
         headers: {"Authorization": 'Bearer ' + accessToken}
@@ -196,7 +223,7 @@ async function generatePlaylist(access_token, temperature, weather_type, mood) {
     const userID = userInfo.id;
     
     // create a playlist
-    const playlistID = await createPlaylist(accessToken, userID, tracksFromSeed);
+    const playlistID = await createPlaylist(accessToken, userID, tracksFromSeed[0]);
 
     return playlistID;
 }
