@@ -20,6 +20,7 @@ function calcMatrix(audioFeaturesArray) {
         tempo = 1.0 - (60.0 / currTrack.tempo);
         currVector.push(tempo);
         currVector.push(currTrack.valence);
+        currVector.push(currTrack.uri);
 
         userMatrix.push(currVector);
         // reset currVector

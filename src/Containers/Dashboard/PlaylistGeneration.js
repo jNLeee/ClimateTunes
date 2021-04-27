@@ -1,4 +1,6 @@
 import calcMatrix from "./calcMatrix";
+import euclideanSimilarity from "./calcSimilarity";
+import generateUserProfileVector from "./calculateUserProfile";
 
 // get user's top 5 artists
 async function getTopArtists(access_token) {
@@ -77,7 +79,7 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
     var danceability = 0;
     const energyArray = [0.677, 0.5274, 0.513, 0.502];  
     var energy = 0;     
-    const loudnessArray = [-8.953, -6.6405, -4.922];   
+    const loudnessArray = [-10, -6, -3];   //[-8.953, -6.6405, -4.922]
     var loudness = 0; 
     const speechinessArray = [0.2, 0.15, 0.05];     //[0.156, 0.110, 0.081];  
     var speechiness = 0;
@@ -167,10 +169,9 @@ async function getTracksFromSeeds(access_token, topGenres, topArtists, temperatu
 }
 
 // create a playlist and add tracks to the playlist. returns playlist id
-async function createPlaylist(access_token, user_id, tracksData) {
+async function createPlaylist(access_token, user_id, trackURIs) {
     const accessToken = access_token;
-    const userID = user_id;
-    const dataFromTracks = tracksData;
+    const userID = user_id
 
     const makePlaylist = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
         method: 'POST',
@@ -185,13 +186,13 @@ async function createPlaylist(access_token, user_id, tracksData) {
     const playlistID = playlist.id;
 
     // add tracks from seed to playlist
-    var trackURIs = "";
-    for (var i = 0; i < Object.keys(dataFromTracks.tracks).length; i++){
-        trackURIs += dataFromTracks.tracks[i].uri;
-        if (i != Object.keys(dataFromTracks.tracks).length - 1) {
-            trackURIs += "%2C";
-        }
-    }
+    // var trackURIs = "";
+    // for (var i = 0; i < Object.keys(dataFromTracks.tracks).length; i++){
+    //     trackURIs += dataFromTracks.tracks[i].uri;
+    //     if (i != Object.keys(dataFromTracks.tracks).length - 1) {
+    //         trackURIs += "%2C";
+    //     }
+    // }
 
     const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks?uris=${trackURIs}`, {
         method: 'POST',    
@@ -214,7 +215,11 @@ async function generatePlaylist(access_token, temperature, weather_type, mood) {
     const topFiftyTracks = await getTopFiftyTracksAudioFeatures(access_token, tracksFromSeed[1]);
 
     const builtMatrix = calcMatrix(topFiftyTracks);
+    const userProfile = await generateUserProfileVector(access_token);
     console.log(builtMatrix);
+
+    const topTen = euclideanSimilarity(userProfile, builtMatrix);
+
     // get current user id
     const userInfoCall = await fetch(`https://api.spotify.com/v1/me`, {
         headers: {"Authorization": 'Bearer ' + accessToken}
@@ -223,7 +228,7 @@ async function generatePlaylist(access_token, temperature, weather_type, mood) {
     const userID = userInfo.id;
     
     // create a playlist
-    const playlistID = await createPlaylist(accessToken, userID, tracksFromSeed[0]);
+    const playlistID = await createPlaylist(accessToken, userID, topTen);
 
     return playlistID;
 }
