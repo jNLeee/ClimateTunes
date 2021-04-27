@@ -17,6 +17,8 @@ import Breezy from "./Assets/Breezy-bg.jpg"
 import Warm from "./Assets/Warm-bg.jpg"
 import Hot from "./Assets/Hot-bg.jpg"
 import generatePlaylist from "./PlaylistGeneration";
+import MySelect from "./Dropdown";
+
 const querystring = require("querystring");
 
 const API_key = "90336965ec56f27809bfa86f63e300fa";
@@ -274,7 +276,7 @@ class Dashboard extends React.Component {
           <div className="dropdown">
 
           <ReactBootStrap.Dropdown>
-            <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle" variant="btn-sm">
+            {/* <ReactBootStrap.Dropdown.Toggle class="dropdown-toggle" variant="btn-sm">
               Choose your mood:
             </ReactBootStrap.Dropdown.Toggle>
 
@@ -282,8 +284,10 @@ class Dashboard extends React.Component {
               <ReactBootStrap.Dropdown.Item href="#/action-1">Happy</ReactBootStrap.Dropdown.Item>
               <ReactBootStrap.Dropdown.Item href="#/action-2">Sad</ReactBootStrap.Dropdown.Item>
               <ReactBootStrap.Dropdown.Item href="#/action-3">Angry</ReactBootStrap.Dropdown.Item>
-            </ReactBootStrap.Dropdown.Menu>
-          </ReactBootStrap.Dropdown>
+            </ReactBootStrap.Dropdown.Menu> */}
+
+            <MySelect></MySelect>
+        </ReactBootStrap.Dropdown>
           </div>
           
           <br></br>
