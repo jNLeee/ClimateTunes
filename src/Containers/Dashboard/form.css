@@ -1,6 +1,6 @@
 form {
-    margin-top: 3rem;
     display: inline-block;
+    margin: 0;
 }
 
 .form-control{
@@ -36,10 +36,11 @@ form input:focus {
 .buttonClass {
     overflow: visible;
     align-items: center;
+    margin-top: 2rem;
 }
 
 .container{
-    align-items: center;
+    vertical-align: baseline;
 }
 
 .input-row{
