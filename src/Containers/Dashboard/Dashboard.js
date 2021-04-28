@@ -99,8 +99,12 @@ class Dashboard extends React.Component {
   };
 
   generatePlaylistLink(id) {
-    var playlist_link = "https://open.spotify.com/embed/playlist/" + String(id);
-    return playlist_link;
+    if(id != undefined) {
+      var playlist_link = "https://open.spotify.com/embed/playlist/" + String(id);
+      return playlist_link;
+    } else { 
+      return "error";
+    }
   }
 
   get_WeatherIcon(icons, rangeId) {
