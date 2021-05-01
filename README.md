@@ -1,4 +1,4 @@
-# Getting Started with CLimateTunes
+# Getting Started with ClimateTunes
 
 1. Make sure that you "cd" to the correct directory in terminal
 2. Run "npm install"
